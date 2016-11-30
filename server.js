@@ -8,6 +8,11 @@ var express = require('express')
   , template = require('jade').compileFile(__dirname + '/source/templates/homepage.jade')
   , template2 = require('jade').compileFile(__dirname + '/source/templates/main_page.jade')
   , template3 = require('jade').compileFile(__dirname + '/source/templates/add_page.jade')
+  , template4 = require('jade').compileFile(__dirname + '/source/templates/edit_page.jade')
+  , template5 = require('jade').compileFile(__dirname + '/source/templates/delete_page.jade')
+  , template6 = require('jade').compileFile(__dirname + '/source/templates/student_report_page.jade')
+  , template7 = require('jade').compileFile(__dirname + '/source/templates/data_report_page.jade')
+  , template8 = require('jade').compileFile(__dirname + '/source/templates/lookup_student_page.jade')
 
 app.use(logger('dev'))
 app.use(express.static(__dirname + '/static'))
@@ -42,6 +47,75 @@ app.get('/add_student', function (req, res, next) {
   }
 })
 
+app.get('/edit_student', function (req, res, next) {
+  try {
+    var html = template4({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
+app.get('/delete_student', function (req, res, next) {
+  try {
+    var html = template5({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
+app.get('/student_report', function (req, res, next) {
+  try {
+    var html = template6({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
+app.get('/data_report', function (req, res, next) {
+  try {
+    var html = template7({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
+app.get('/lookup_student_report', function (req, res, next) {
+  try {
+    var html = template8({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
+app.listen(process.env.PORT || 3000, function () {
+  console.log('Listening on http://localhost:' + (process.env.PORT || 3000))
+})
+  }
+})
+
+app.get('/data_report', function (req, res, next) {
+  try {
+    var html = template7({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
+app.get('/lookup_student_report', function (req, res, next) {
+  try {
+    var html = template8({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+>>>>>>> 605f761a08728458cddb153486cbf9e6c12c5e8e
 
 app.listen(process.env.PORT || 3000, function () {
   console.log('Listening on http://localhost:' + (process.env.PORT || 3000))

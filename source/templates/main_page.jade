@@ -7,13 +7,9 @@ block content
 			.form
 				form.select-form
 					button(onclick="add_move(); return false;") Add Student
-					button Edit Student
-					button Delete Student
-					button Student Report
-					button Data Report
-					button Lookup Student
-
-
-
-
-
+					button(onclick="edit_move(); return false;") Edit Student
+					button(onclick="delete_move(); return false;") Delete Student
+					button(onclick="student_report_move(); return false;") Student Report
+					button(onclick="data_report_move(); return false;") Data Report
+					button(onclick="lookup_student_move(); return false;") Lookup Student
+				
