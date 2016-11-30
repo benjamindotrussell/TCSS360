@@ -1,4 +1,9 @@
 @import url("https&://fonts&.googleapis&.com/css?family=Roboto&:300");
+.header {
+  background: url("https://www.washington.edu/studyabroad/files/2015/02/Cherries.jpg");
+  background-size: cover;
+  background-position: center;
+}
 .header .page-title {
   padding: 5% 0 5%;
   font-family: "Roboto", sans-serif;
