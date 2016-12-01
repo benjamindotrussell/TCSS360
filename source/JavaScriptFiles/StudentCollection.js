@@ -12,6 +12,8 @@ var connection 	= mysql.createConnection({
   database : '_360team11',
 });
 connection.connect(function(err) {
+  
+	//forTest
   console.log("Connected");
   
 });
@@ -30,7 +32,20 @@ function StudentCollection() {
 	this.findID = findID;
 }
 retrieveStudent = function(id){
-	var query = connection.query('SELECT * FROM students WHERE studentID = ?', id);
+	var query = connection.query('SELECT * FROM students WHERE studentID = ' + id, 
+		function(err, data) {
+			try{ 
+				if (err) {
+					console.log(err);
+				} else {
+					//console.log(data[1, 0]);
+					return data;
+				}
+			} catch (err){
+				console.log("query failed");
+			}
+	});
+	//forTest
 	console.log(query.sql);
 	
 	return null;
@@ -42,20 +57,40 @@ retrieveStudent = function(id){
 	//return null;
 }
 
-retrieveStudent('1');
-/**
+	//forTest
+retrieveStudent('21');
+
 retrieveStudent = function(lName){
+	var query = connection.query('SELECT * FROM students WHERE lName = "' + lName + '"', 
+		function(err, data) {
+			try{ 
+				if (err) {
+					console.log(err);
+				} else {
+					console.log(data);
+				}
+			} catch (err){
+				console.log("query failed");
+			}
+	});
 	
+	//forTest
+	console.log(query.sql);
+	/**
 	for (i = 0; i < students.length; i++) {
 		if (students[i].lName == lName) {
 			return student[i];
 		}
 	}
+	**/
 	return null;
 }
-**/
+
+	//forTest
+//retrieveStudent('Doe');
 addStudent = function(Student) {
-	var numberOfStudents = students.length;
+	var numbe
+	rOfStudents = students.length;
 	var post = {lName: Student.lName,
 				fName: Student.fName,
 				studentID: Student.studentID,
