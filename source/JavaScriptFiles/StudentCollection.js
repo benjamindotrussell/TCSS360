@@ -14,15 +14,14 @@ var connection 	= mysql.createConnection({
 connection.connect(function(err) {
   console.log("No Connection");
 });
-
-var post = {lName: 'Russell', fName: 'Ben'};
-var query = connection.query('INSERT INTO students SET ?', post, function(err, resut) {
+//for testing
+//var post = {lName: 'Russell', fName: 'Ben'};
+//var query = connection.query('INSERT INTO students SET ?', post, function(err, resut) {
 	
-});
-console.log(query.sql);
+//});
+//console.log(query.sql);
 
 var students = [];
-console.log(students);
 function StudentCollection() {
 	this.addStudent = addStudent;
 	this.retrieveStudent = retrieveStudent;
@@ -32,6 +31,9 @@ function StudentCollection() {
 }
 
 retrieveStudent = function(id){
+	//var query = connection.query('SELECT FROM students WHERE studentID = ?', id);
+	//console.log(query.sql);
+
 	for (i = 0; i < students.length; i++) {
 		if (students[i].studentID == id) {
 			return student[i];
