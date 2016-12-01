@@ -1,11 +1,13 @@
+//The default login page. Contains the header and footer used across the web app.
+
 doctype html
 html
   head
-    //link(rel='stylesheet', href='/css/index.css')
+    link(rel='stylesheet', href='/css/index.css')
     title Student Acheivement Tracker
   body
     .header
-      h1.page-title Please Log-In
+      h1.page-title Student Achievement Tracker
 
     ul.nav
       
@@ -15,3 +17,55 @@ html
 
     .footer
       p This website is free and open-source. To view the source code visit <a href="https://github.com/Rpotter8/TCSS360"> this</a>.
+
+// A script to call the next page upon credential verification.
+script.
+  function move() {
+
+    window.location.href = '/newpage'
+
+  }  
+
+// A script to move to the add student view
+script.
+  function add_move() {
+
+    window.location.href = '/add_student'
+    
+
+  } 
+//A script to move to the edit student view
+script.
+  function edit_move() {
+
+    window.location.href = '/edit_student'
+
+  }  
+  //A script to move to the delete student view
+script.
+  function delete_move() {
+
+    window.location.href = '/delete_student'
+
+  } 
+//A script to move to the student report view
+script.
+  function student_report_move() {
+
+    window.location.href = '/student_report'
+
+  } 
+//A script to move to the student data view
+script.
+  function data_report_move() {
+
+    window.location.href = '/data_report'
+
+  }
+//A script to move to the lookup student view
+script.
+  function lookup_student_move() {
+
+    window.location.href = '/lookup_student_report'
+
+  } 

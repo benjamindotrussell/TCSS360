@@ -1,56 +1,115 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:400,200,700')
+//Compile this file to get the css for the homepage.
 
-*
-  margin 0
-  padding 0
-  box-sizing border-box
-
-body
-  font-family 'Source Code Pro', monospace
+@import url(https&://fonts&.googleapis&.com/css?family=Roboto&:300)
 
 .header
-  background url('https://images.unsplash.com/photo-1451337516015-6b6e9a44a8a3?crop=entropy&fit=crop&fm=jpg&h=975&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1925')
-  background-position center
+    background url('https://www.washington.edu/studyabroad/files/2015/02/Cherries.jpg')
+    background-size: cover
+    background-position: center
 
-  .page-title
-    font-weight 200
-    font-size 80px
+
+    .page-title
+        padding 5% 0 5%
+        font-family "Roboto", sans-serif
+        text-align center
+        text-transform uppercase
+        color: white
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
+
+
+.login-page
+    width 360px
+    padding 8% 0 0
+    margin auto
+
+.form
+    position relative
+    z-index 1
+    background #FFFFFF
+    max-width 360px
+    margin 0 auto 100px
+    padding 45px
     text-align center
-    padding 100px
-    text-transform uppercase
-    color #fff
+    box-shadow 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24)
+    input
+        font-family "Roboto", sans-serif
+        outline 0
+        background #f2f2f2
+        width 100%
+        border 0
+        margin 0 0 15px
+        padding 15px
+        box-sizing border-box
+        font-size 14px
+    button
+        font-family "Roboto", sans-serif
+        text-transform uppercase
+        outline 0
+        background #4b2e83
+        width 100%
+        border 0
+        padding 15px
+        color #FFFFFF
+        font-size 14px
+        -webkit-transition all 0.3 ease
+        transition all 0.3 ease
+        cursor pointer
+    .message
+        margin 15px 0 0
+        color #b3b3b3
+        font-size 12px
+        a
+            color #4CAF50
+            text-decoration none
+    .register-form
+        display none
 
-.nav
-  background #000
-  text-align center
+.form button:hover,.form button:active,.form button:focus
+    background #b7a57a
 
-  li
-    display inline-block
+.container
+    position relative
+    z-index 1
+    max-width 300px
+    margin 0 auto
+    .info
+        margin 50px auto
+        text-align center
+        h1
+            margin 0 0 15px
+            padding 0
+            font-size 36px
+            font-weight 300
+            color #1a1a1a
+        span
+            color #4d4d4d
+            font-size 12px
+            a
+                color #000000
+                text-decoration none
+            .fa
+                color #EF3B3A
 
-  a
-    display inline-block
-    padding 20px
-    color #fff
-    text-decoration none
-
-    &:hover
-      background-color #3AB795
-      text-decoration underline
-
-.main-content
-  margin 50px auto
-  max-width 600px
-
-  p
-    line-height 1.6
-    margin-bottom 1.7em
+.container:before, .container:after
+    content ""
+    display block
+    clear both
 
 .footer
-  margin 50px auto
-  max-width 600px
-  border-top 1px solid #444
-  padding 20px 0
+    font-size: 50%
+    padding 1% 0 0
+    font-family "Roboto", sans-serif
+    text-align center
+    text-transform uppercase
+    color: white
 
-  p
-    color #444
-    font-size 12px
+
+body
+    background #4b2e83
+    background -webkit-linear-gradient(right, #4b2e83, #b7a57a)
+    background -moz-linear-gradient(right, #4b2e83, #b7a57a)
+    background -o-linear-gradient(right, #4b2e83, #b7a57a)
+    background linear-gradient(to left, #4b2e83, #b7a57a 70%)
+    font-family "Roboto", sans-serif
+    -webkit-font-smoothing antialiased
+    -moz-osx-font-smoothing grayscale

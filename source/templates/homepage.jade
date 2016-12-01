@@ -1,27 +1,18 @@
+//In this webapp the homepage is the login page. Its the first view
+//A user will see.
+
 extend default
 
 block content
     .login-page
-      .form
-        form.register-form
-          input(type='text', placeholder='name')
-          |       
-          input(type='password', placeholder='password')
-          |       
-          input(type='text', placeholder='email address')
-          |       
-          button create
-          |       
-          p.message
-            | Already registered? 
-            a(href='#') Sign In
-        |     
+      .form   
         form.login-form
           input(type='text', placeholder='username')
           |       
-          input(type='password', placeholder='password')
+          input(type='password',
+           placeholder='password')
           |       
-          button login
-    |   
+          button(onclick="move(); return false;") login
+
 
 
