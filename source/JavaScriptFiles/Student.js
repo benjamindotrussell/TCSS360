@@ -20,6 +20,7 @@ function Student(fName, lName, studentID, graduationTerm, gradYear, externalEmai
 	this.addNewStudent = addNewStudent;
 	this.updateStudent = updateStudent;
 	this.updateStudentJob = updateStudentJob;
+	return this;
 }
 
 /** Add a student to the system with all information. **/
@@ -45,3 +46,4 @@ updateStudent = function() {
 updateStudentJob = function(employerName, employeeSalary, startDate, jobTitle) {
 	return JobCollection.addJob(employerName, employeeSalary, startDate, 				jobTitle);
 }
+module.exports = Student;

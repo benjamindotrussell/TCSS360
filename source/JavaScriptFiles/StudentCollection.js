@@ -4,6 +4,7 @@
 	Author: Ben Russell
 	Date: 	11/27/2016
 **/
+var Student		= require('./Student');
 var mysql		= require('mysql');
 var connection 	= mysql.createConnection({
   host     : 'cssgate.insttech.washington.edu',
@@ -11,19 +12,16 @@ var connection 	= mysql.createConnection({
   password : 'HifOot',
   database : '_360team11',
 });
-connection.connect(function(err) {
-  
-	//forTest
-  console.log("Connected");
-  
+connection.connect(function(err) {  
+  if (err) { console.log(err);};
 });
 //for testing
-//var post = {lName: 'Russell', fName: 'Ben', studentID: '1'};
-//var query = connection.query('INSERT INTO students SET ?', post, function(err, resut) {
-	
-//});
-//console.log(query.sql);
-var students = [];
+//var s = Student("Russell", "Jerry", "14", "Fall", "2001", "bigYellow@Yahoo.com", "notastudent@uw.edu", "2.5");
+/**
+* StudentColletion class: A class that intefaces with the DB
+* Param:  none
+* return: none
+**/
 function StudentCollection() {
 	this.addStudent = addStudent;
 	this.retrieveStudent = retrieveStudent;
@@ -31,12 +29,18 @@ function StudentCollection() {
 	this.studentReport = studentReport;
 	this.findID = findID;
 }
+/**
+* Retrieve student information from the DB by studentID.
+* Param:  id the studentID of a student
+* return: data A students data.
+**/
 retrieveStudent = function(id){
-	var query = connection.query('SELECT * FROM students WHERE studentID = ' + id, 
+	connection.query('SELECT * FROM students WHERE studentID = ' + id, 
 		function(err, data) {
 			try{ 
 				if (err) {
 					console.log(err);
+					return null;
 				} else {
 					//console.log(data[1, 0]);
 					return data;
@@ -45,52 +49,41 @@ retrieveStudent = function(id){
 				console.log("query failed");
 			}
 	});
-	//forTest
-	console.log(query.sql);
-	
-	return null;
-	//for (i = 0; i < students.length; i++) {
-		//if (students[i].studentID == id) {
-		//	return student[i];
-//
-	//}
-	//return null;
 }
 
 	//forTest
-retrieveStudent('21');
-
+//retrieveStudent('21');
+/**
+* Retrieve student information from the DB by last name.
+* Param:  lName the last name of a student
+* return: data A students data.
+**/
 retrieveStudent = function(lName){
-	var query = connection.query('SELECT * FROM students WHERE lName = "' + lName + '"', 
+	connection.query('SELECT * FROM students WHERE lName = "' + lName + '"', 
 		function(err, data) {
 			try{ 
 				if (err) {
 					console.log(err);
+					return null;
 				} else {
-					console.log(data);
+					return data;
 				}
 			} catch (err){
 				console.log("query failed");
 			}
-	});
-	
-	//forTest
-	console.log(query.sql);
-	/**
-	for (i = 0; i < students.length; i++) {
-		if (students[i].lName == lName) {
-			return student[i];
-		}
-	}
-	**/
+	});	
 	return null;
 }
 
 	//forTest
 //retrieveStudent('Doe');
+
+/**
+* Add a studetn to the DB.
+* Param:  Student A student to add 
+* return: boolean whether the query succeded.
+**/
 addStudent = function(Student) {
-	var numbe
-	rOfStudents = students.length;
 	var post = {lName: Student.lName,
 				fName: Student.fName,
 				studentID: Student.studentID,
@@ -100,38 +93,71 @@ addStudent = function(Student) {
 				uwEmail: Student.uwEmail, 
 				gpa: Student.gpa
 	};
-	//var query = connection.query('INSERT INTO students SET ?', post, function(err, resut) {
-	
-	//});
-	return (numberOfStudents + 1 == students.push(Student));	
+	connection.query('INSERT INTO students SET ?', post, function(err, result) {
+		if(err) { 
+			console.log(err);
+			return false;
+		};
+	});
+	return true;	
 }
+//Test line
+//addStudent(s);
 
-deleteStudent = function(Student) {
-	var numberOfStudents = students.length;
-	for (i = 0; i < students.length; i++) {
-		if (students[i].studentID == Student.studentID) {
-			students.splice(i, 1);
-		}
-	}
-	var newNumberOfStudents = students.length;
-	return (numberOfStudents == newNumberOfStudents + 1);
-}
-
-//return a list of all students in the database
-listStudents = function() {
-	
+/**
+* remove a student from the DB.
+* Param: student A student to remove.
+* return: booean whether the query succeded.
+**/
+deleteStudent = function(student) {
+	connection.query('DELETE FROM students WHERE studentID = ?', student.studentID,
+			function(err, result) {
+		if(err) { 
+			//console.log(err);
+			return false;
+		};
+	});
 	return true;
 }
-//generate a report on the percentage of students who have a job.
+//Test line
+//deleteStudent(s);
+
+/**
+* return a list of all students in the database.
+* Param: none 
+* return: array of students.
+**/
+listStudents = function() {
+	connection.query('SELECT * FROM students', 
+		function(err, data) {
+			try{ 
+				if (err) {
+					console.log(err);
+					return null;
+				} else {
+					return data;
+				}
+			} catch (err){
+				console.log("query failed");
+			}
+	});
+	return null;
+}
+/**
+* generate a report on the percentage of students who have a job.
+* Param: none
+* return: double.
+**/
 jobReport = function() {
 	return double;
 }
-//return percentage of students within a gpa range 2.5 - 2.9, 3.0 - 3.4 ......
-gpaReport = function() {	
+/**
+* return percentage of students within a gpa range 2.5 - 2.9, 3.0 - 3.4 ......
+* Param: lowerBound, upperBound,
+* return: double.
+**/
+gpaReport = function(lowerBound, upperBound) {	
 	return double;
 }
-
-findID = function() {
-	return true;
-}
+//terminate the DB connection
 connection.end();
