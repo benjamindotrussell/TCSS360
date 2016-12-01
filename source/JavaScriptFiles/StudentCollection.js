@@ -12,15 +12,15 @@ var connection 	= mysql.createConnection({
   database : '_360team11',
 });
 connection.connect(function(err) {
-  console.log("No Connection");
+  console.log("Connected");
+  
 });
 //for testing
-//var post = {lName: 'Russell', fName: 'Ben'};
+//var post = {lName: 'Russell', fName: 'Ben', studentID: '1'};
 //var query = connection.query('INSERT INTO students SET ?', post, function(err, resut) {
 	
 //});
 //console.log(query.sql);
-
 var students = [];
 function StudentCollection() {
 	this.addStudent = addStudent;
@@ -29,19 +29,21 @@ function StudentCollection() {
 	this.studentReport = studentReport;
 	this.findID = findID;
 }
-
 retrieveStudent = function(id){
-	//var query = connection.query('SELECT FROM students WHERE studentID = ?', id);
-	//console.log(query.sql);
-
-	for (i = 0; i < students.length; i++) {
-		if (students[i].studentID == id) {
-			return student[i];
-		}
-	}
+	var query = connection.query('SELECT * FROM students WHERE studentID = ?', id);
+	console.log(query.sql);
+	
 	return null;
+	//for (i = 0; i < students.length; i++) {
+		//if (students[i].studentID == id) {
+		//	return student[i];
+//
+	//}
+	//return null;
 }
 
+retrieveStudent('1');
+/**
 retrieveStudent = function(lName){
 	
 	for (i = 0; i < students.length; i++) {
@@ -51,7 +53,7 @@ retrieveStudent = function(lName){
 	}
 	return null;
 }
-
+**/
 addStudent = function(Student) {
 	var numberOfStudents = students.length;
 	var post = {lName: Student.lName,
@@ -97,3 +99,4 @@ gpaReport = function() {
 findID = function() {
 	return true;
 }
+connection.end();
