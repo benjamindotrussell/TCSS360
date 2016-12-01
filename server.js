@@ -13,6 +13,10 @@ var express = require('express')
   , template6 = require('jade').compileFile(__dirname + '/source/templates/student_report_page.jade')
   , template7 = require('jade').compileFile(__dirname + '/source/templates/data_report_page.jade')
   , template8 = require('jade').compileFile(__dirname + '/source/templates/lookup_student_page.jade')
+  , template9 = require('jade').compileFile(__dirname + '/source/templates/loaded_student_page.jade')
+  , template10 = require('jade').compileFile(__dirname + '/source/templates/generated_student_page.jade')
+  , template11 = require('jade').compileFile(__dirname + '/source/templates/students_fulfill_page.jade')
+
 
 app.use(logger('dev'))
 app.use(express.static(__dirname + '/static'))
@@ -86,6 +90,33 @@ app.get('/data_report', function (req, res, next) {
 app.get('/lookup_student_report', function (req, res, next) {
   try {
     var html = template8({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
+app.get('/loaded_student_report', function (req, res, next) {
+  try {
+    var html = template9({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
+app.get('/generated_student_report', function (req, res, next) {
+  try {
+    var html = template10({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
+app.get('/students_fulfill_report', function (req, res, next) {
+  try {
+    var html = template11({ title: 'Home' })
     res.send(html)
   } catch (e) {
     next(e)
