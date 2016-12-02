@@ -4,19 +4,23 @@
 	Author: Ben Russell
 	Date: 	11/27/2016
 **/
+//imports
 var Student		= require('./Student');
 var mysql		= require('mysql');
+
+//connect to the DB
 var connection 	= mysql.createConnection({
   host     : 'cssgate.insttech.washington.edu',
   user     : '_360team11',
   password : 'HifOot',
   database : '_360team11',
 });
+
+//test connection 
 connection.connect(function(err) {  
   if (err) { console.log(err);};
 });
-//for testing
-//var s = Student("Russell", "Jerry", "14", "Fall", "2001", "bigYellow@Yahoo.com", "notastudent@uw.edu", "2.5");
+
 /**
 * StudentColletion class: A class that intefaces with the DB
 * Param:  none
@@ -42,7 +46,7 @@ retrieveStudent = function(id){
 					console.log(err);
 					return null;
 				} else {
-					//console.log(data[1, 0]);
+					console.log(data[1, 0]);
 					return data;
 				}
 			} catch (err){
@@ -51,8 +55,6 @@ retrieveStudent = function(id){
 	});
 }
 
-	//forTest
-//retrieveStudent('21');
 /**
 * Retrieve student information from the DB by last name.
 * Param:  lName the last name of a student
@@ -74,9 +76,6 @@ retrieveStudent = function(lName){
 	});	
 	return null;
 }
-
-	//forTest
-//retrieveStudent('Doe');
 
 /**
 * Add a studetn to the DB.
@@ -101,8 +100,6 @@ addStudent = function(Student) {
 	});
 	return true;	
 }
-//Test line
-//addStudent(s);
 
 /**
 * remove a student from the DB.
@@ -113,14 +110,12 @@ deleteStudent = function(student) {
 	connection.query('DELETE FROM students WHERE studentID = ?', student.studentID,
 			function(err, result) {
 		if(err) { 
-			//console.log(err);
+			console.log(err);
 			return false;
 		};
 	});
 	return true;
 }
-//Test line
-//deleteStudent(s);
 
 /**
 * return a list of all students in the database.
