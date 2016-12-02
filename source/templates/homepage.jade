@@ -6,13 +6,13 @@ extend default
 block content
     .login-page
       .form   
-        form.login-form
-          input(type='text', placeholder='username')
+        form.login(action='/newpage', method = 'GET')
+          input(type='text', name='username', placeholder='username')
           |       
           input(type='password',
            placeholder='password')
           |       
-          button(onclick="move(); return false;") login
+          button(onclick="move(); type='submit', return false;") login
 
 
 

@@ -3,7 +3,7 @@ extend default
 block content
 	.delete-page
 		.form
-			form.delete-student
+			form.delete-student(action='/delete_student', method = 'GET')
 				p Please enter id of the student to delete.
-				input(type='text', placeholder='Student ID')
-				button Delete Student
+				input(type='text', name='st_id', placeholder='Student ID')
+				button(onclick="move(); type='submit', return false;") Delete Student
