@@ -6,7 +6,9 @@
 **/
 var Degree 			= require("./Degree");
 var TransferSchool 	= require("./TransferSchool");
-var students = [];
+var degreeList = [];
+var transferSchoolList = [];
+var jobList = [];
 /**	Student with fields.**/
 function Student(fName, lName, studentID, graduationTerm, gradYear, externalEmail				, uwEmail, gpa) {
 	this.fName = fName;
@@ -28,14 +30,14 @@ function Student(fName, lName, studentID, graduationTerm, gradYear, externalEmai
 /** Add a student to the system with all information. **/
 addStudent = function(fName, lName, studentID, degree, degreeLevel, graduationTerm, 					gradYear, externalEmail, uwEmail, gpa) {
 	var student = new Student(fName, lName, studentID, graduationTerm, gradYear, 						externalEmail, uwEmail, gpa);
-	addDegree(degree, degreeLevel, student);	
+	addDegree(degree, degreeLevel, student);
+	return StudentCollection.addStudent(fName, lName, studentID, graduationTerm, gradYear, 						externalEmail, uwEmail, gpa);
 }
 
 /** Add a student to the system with just name and id. **/
 addNewStudent = function(fName, lName, studentID) {
 	var student = new Student(fName, lName, studentID);
-	
-	return true;
+	return StudentCollection.addStudent(fName, lName, studentID);
 }
 /** 
 * Add a degree to the students information.
@@ -45,16 +47,17 @@ addNewStudent = function(fName, lName, studentID) {
 * return: boolean Success or failure.
 */
 addDegree = function(degreeName, degreeLvl, student) {
+	degreeList.push(new Degree(degreeName, degreeLvl));
 	return Degree.addDegree(degreeName, degreeLvl, student.studentID);	
 }
 /** Update a Students basic information **/
-updateStudent = function(Student) {
-	
-	return true;
+updateStudent = function(fName, lName, studentID, degree, degreeLevel, graduationTerm, 					gradYear, externalEmail, uwEmail, gpa) {	
+	return StudentCollection.updateStudent(fName, lName, studentID, degree, degreeLevel, 				graduationTerm,	gradYear, externalEmail, uwEmail, gpa);
 }
 
 /**  Update a Students employment information **/
 updateStudentJob = function(employerName, employeeSalary, startDate, jobTitle) {
-	return JobCollection.addJob(employerName, employeeSalary, startDate, 				jobTitle);
+	
+	return JobCollection.addJob(employerName, employeeSalary, startDate, jobTitle);
 }
 module.exports = Student;

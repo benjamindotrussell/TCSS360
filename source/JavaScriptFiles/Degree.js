@@ -20,13 +20,17 @@ var connection 	= mysql.createConnection({
 connection.connect(function(err) {  
   if (err) { console.log(err);};
 });
+/**
+	A Degree Object
+	field1: myDegree		name of the degree
+	field2: myDegreeLevel	level of the degree
+**/
 function Degree(degree, degreeLevel) {
 	this.myDegree = degree;
 	this.myDegreeLevel = degreeLevel;
 }
 
-addDegree = function(degreeName, degreeLvl, studentID) {
-	
+addDegree = function(degreeName, degreeLvl, studentID) {	
 	var post = {degreeProgram: degreeName,
 				degreeLevel: degreeLvl,
 				studentID: studentID};
@@ -39,6 +43,5 @@ addDegree = function(degreeName, degreeLvl, studentID) {
 	return true;	
 }
 
-addDegree("Philosophy", "Bachelors", "21");
 module.exports = Degree;
 connection.end();
