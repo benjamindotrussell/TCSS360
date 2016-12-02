@@ -92,6 +92,21 @@ app.get('/lookup_student_report', function (req, res, next) {
   }
 })
 
+app.get('/submit_add', function (req, res) {
+   // Prepare output in JSON format
+
+   console.log(req.query.f_name + " " + req.query.l_name)
+
+
+   try {
+    var html = template3({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
 app.listen(process.env.PORT || 3000, function () {
   console.log('Listening on http://localhost:' + (process.env.PORT || 3000))
 })
+
