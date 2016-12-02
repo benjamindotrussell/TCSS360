@@ -56,7 +56,13 @@ app.get('/newpage', function (req, res, next) {
 			next(e)
 		}
 	} else {
-		console.log('wrong password or username')
+		template = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
+		try {
+			var html = template({ title: 'Home' })
+			res.send(html)
+		} catch (e) {
+			next(e)
+		}
 	}
 })
 

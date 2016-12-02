@@ -2,6 +2,7 @@
 
 doctype html
 html
+  -var text = ""
   head
     link(rel='stylesheet', href='/css/index.css')
     title Student Acheivement Tracker
@@ -24,6 +25,10 @@ script.
 
     window.location.href = '/newpage'
 
+  }
+script.
+  function chagneText() {
+    text = "Hello"
   }  
 
 // A script to move to the add student view
