@@ -5,9 +5,7 @@
 	Date: 	11/27/2016
 **/
 //imports
-var Student		= require('./Student');
 var mysql		= require('mysql');
-
 //connect to the DB
 var connection 	= mysql.createConnection({
   host     : 'cssgate.insttech.washington.edu',
@@ -39,14 +37,14 @@ function StudentCollection() {
 * return: data A students data.
 **/
 retrieveStudent = function(id){
-	connection.query('SELECT * FROM students WHERE studentID = ' + id, 
+	connection.query('SELECT * FROM students WHERE studentID = "' + id + '"', 
 		function(err, data) {
 			try{ 
 				if (err) {
 					console.log(err);
 					return null;
 				} else {
-					console.log(data[1, 0]);
+					console.log(data);
 					return data;
 				}
 			} catch (err){
@@ -54,7 +52,7 @@ retrieveStudent = function(id){
 			}
 	});
 }
-
+//retrieveStudent('Russell'); //testLine
 /**
 * Retrieve student information from the DB by last name.
 * Param:  lName the last name of a student
@@ -82,15 +80,15 @@ retrieveStudent = function(lName){
 * Param:  Student A student to add 
 * return: boolean whether the query succeded.
 **/
-addStudent = function(Student) {
-	var post = {lName: Student.lName,
-				fName: Student.fName,
-				studentID: Student.studentID,
-				graduationTerm: Student.graduationTerm, 
-				graduationYear: Student.graduationYear,
-				externalEmail: Student.externalEmail, 
-				uwEmail: Student.uwEmail, 
-				gpa: Student.gpa
+addStudent = function(fName, lName, studentID, graduationTerm, gradYear, 							externalEmail, uwEmail, gpa) {
+	var post = {lName: lName,
+				fName: fName,
+				studentID: studentID,
+				graduationTerm: graduationTerm, 
+				graduationYear: graduationYear,
+				externalEmail: externalEmail, 
+				uwEmail: uwEmail, 
+				gpa: gpa
 	};
 	connection.query('INSERT INTO students SET ?', post, function(err, result) {
 		if(err) { 
@@ -138,6 +136,27 @@ listStudents = function() {
 	});
 	return null;
 }
+
+updateStudent = function(fName, lName, studentID, degree, degreeLevel, graduationTerm, 					gradYear, externalEmail, uwEmail, gpa) {
+	var post = {lName: lName,
+				fName: fName,
+				graduationTerm: graduationTerm, 
+				graduationYear: graduationYear,
+				externalEmail: externalEmail, 
+				uwEmail: uwEmail, 
+				gpa: gpa
+	};
+	
+	connection.query('UPDATE students SET ? WHERE studentID = studentID'
+		, post, function(err, result) {
+		if(err) { 
+			console.log(err);
+			return false;
+		};
+	});
+	return true;	
+}
+
 /**
 * generate a report on the percentage of students who have a job.
 * Param: none
