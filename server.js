@@ -16,6 +16,7 @@ var express = require('express')
 , template9 = require('jade').compileFile(__dirname + '/source/templates/loaded_student_page.jade')
 , template10 = require('jade').compileFile(__dirname + '/source/templates/generated_student_page.jade')
 , template11 = require('jade').compileFile(__dirname + '/source/templates/students_fulfill_page.jade')
+, templatealt = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
@@ -56,9 +57,8 @@ app.get('/newpage', function (req, res, next) {
 			next(e)
 		}
 	} else {
-		template = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
 		try {
-			var html = template({ title: 'Home' })
+			var html = templatealt({ title: 'Home' })
 			res.send(html)
 		} catch (e) {
 			next(e)
