@@ -50,7 +50,7 @@ app.get('/', function (req, res, next) {
 })
 
 
-// Page after teh login page
+// Page after the login page
 app.get('/newpage', function (req, res, next) {
 
 	if (req.query.username != '' && req.query.password != '') {
@@ -132,6 +132,8 @@ app.get('/data_report', function (req, res, next) {
 
 // page for lookup student
 app.get('/lookup_student_report', function (req, res, next) {
+	// console.log('Page for look up student')
+	// console.log('student id = ' + req.query.st_id)
 	try {
 		var html = lookupStudent({ title: 'Home' })
 		res.send(html)
@@ -142,11 +144,17 @@ app.get('/lookup_student_report', function (req, res, next) {
 
 // page for lookup student
 app.get('/loaded_lookup_student_report', function (req, res, next) {
-	try {
-		var html = loadedLookupStudent({ title: 'Home' })
-		res.send(html)
-	} catch (e) {
-		next(e)
+	console.log('loaded lookup student.')
+	console.log('student id = ' + req.query.st_id)
+	if(req.query.st_id != '' && req.query.f_name != ''){
+		try {
+			var html = loadedLookupStudent({ title: 'Home' })
+			res.send(html)
+		} catch (e) {
+			next(e)
+		}
+	} else {
+		console.log('Please enter correct data\n')
 	}
 })
 
@@ -160,11 +168,7 @@ app.get('/submit_add', function (req, res) {
   // })
   // console.log('insert\n')
   // console.log(query.sql + '\n')
-  	if (req.query.st_id != '' || req.query.f_name != ''|| req.query.l_name != '') {
-
-  	}
   	if (req.query.st_id != '' && req.query.f_name != '' && req.query.l_name != '') {
-
   		//add new student with correct data
   		console.log('student as been added\n')
   	try {
