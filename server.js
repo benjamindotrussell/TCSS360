@@ -73,21 +73,21 @@ app.get('/newpage', function (req, res, next) {
 
 	});
 
-	if (req.query.username != '' && req.query.password != '') {
-		try {
-			var html = mainPage({ title: 'Home' })
-			res.send(html)
-		} catch (e) {
-			next(e)
-		}
-	} else {
-		try {
-			var html = templatealt({ title: 'Home' })
-			res.send(html)
-		} catch (e) {
-			next(e)
-		}
-	}
+	// if (req.query.username != '' && req.query.password != '') {
+	// 	try {
+	// 		var html = mainPage({ title: 'Home' })
+	// 		res.send(html)
+	// 	} catch (e) {
+	// 		next(e)
+	// 	}
+	// } else {
+	// 	try {
+	// 		var html = templatealt({ title: 'Home' })
+	// 		res.send(html)
+	// 	} catch (e) {
+	// 		next(e)
+	// 	}
+	// }
 })
 
 // page for adding new students
