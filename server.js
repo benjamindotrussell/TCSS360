@@ -72,6 +72,7 @@ app.get('/newpage', function (req, res, next) {
 		}
 
 	});
+	
 
 	// if (req.query.username != '' && req.query.password != '') {
 	// 	try {
