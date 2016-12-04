@@ -1,22 +1,24 @@
 // This is the driver for the web app. It runs the server as well as conatins information
 // on the individual views the web app has.
 
-// Variables for building the enviroment
+// Compiles all of the Jade files into HTML.
 var express = require('express')
 , logger = require('morgan')
 , app = express()
-, template = require('jade').compileFile(__dirname + '/source/templates/homepage.jade')
-, template2 = require('jade').compileFile(__dirname + '/source/templates/main_page.jade')
-, template3 = require('jade').compileFile(__dirname + '/source/templates/add_page.jade')
-, template4 = require('jade').compileFile(__dirname + '/source/templates/edit_page.jade')
-, template5 = require('jade').compileFile(__dirname + '/source/templates/delete_page.jade')
-, template6 = require('jade').compileFile(__dirname + '/source/templates/student_report_page.jade')
-, template7 = require('jade').compileFile(__dirname + '/source/templates/data_report_page.jade')
-, template8 = require('jade').compileFile(__dirname + '/source/templates/lookup_student_page.jade')
-, template9 = require('jade').compileFile(__dirname + '/source/templates/loaded_student_page.jade')
-, template10 = require('jade').compileFile(__dirname + '/source/templates/generated_student_page.jade')
-, template11 = require('jade').compileFile(__dirname + '/source/templates/students_fulfill_page.jade')
+, homepage = require('jade').compileFile(__dirname + '/source/templates/homepage.jade')
+, mainPage = require('jade').compileFile(__dirname + '/source/templates/main_page.jade')
+, addPage = require('jade').compileFile(__dirname + '/source/templates/add_page.jade')
+, editPage = require('jade').compileFile(__dirname + '/source/templates/edit_page.jade')
+, deletePage = require('jade').compileFile(__dirname + '/source/templates/delete_page.jade')
+, studentReport = require('jade').compileFile(__dirname + '/source/templates/student_report_page.jade')
+, dataReport = require('jade').compileFile(__dirname + '/source/templates/data_report_page.jade')
+, lookupStudent = require('jade').compileFile(__dirname + '/source/templates/lookup_student_page.jade')
+, loadedStudent = require('jade').compileFile(__dirname + '/source/templates/loaded_student_page.jade')
+, generatedStudent = require('jade').compileFile(__dirname + '/source/templates/generated_student_page.jade')
+, studentsFulfill = require('jade').compileFile(__dirname + '/source/templates/students_fulfill_page.jade')
 , templatealt = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
+
+//A Data connection for searching the database
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
@@ -39,7 +41,7 @@ app.use(express.static(__dirname + '/static'))
 app.get('/', function (req, res, next) {
 	try {
 		console.log('log in page')
-		var html = template({ title: 'Home' })
+		var html = homepage({ title: 'Home' })
 		res.send(html)
 	} catch (e) {
 		next(e)
@@ -49,36 +51,61 @@ app.get('/', function (req, res, next) {
 
 // Page after teh login page
 app.get('/newpage', function (req, res, next) {
-	if (req.query.username != '' && req.query.password != '') {
-		try {
-			var html = template2({ title: 'Home' })
-			res.send(html)
-		} catch (e) {
-			next(e)
+	var username = req.query.username
+	var password = req.query.password
+
+	var query = connection.query('SELECT * FROM staff', function(err, rows) {
+  		if(rows[0].userName == username && rows[0].password == password) {
+  			try {
+				var html = mainPage({ title: 'Home' })
+				res.send(html)
+			} catch (e) {
+				next(e)
+			} 
+		} else {
+			try {
+				var html = templatealt({ title: 'Home' })
+				res.send(html)
+			} catch (e) {
+				next(e)
+			}
 		}
-	} else {
-		try {
-			var html = templatealt({ title: 'Home' })
-			res.send(html)
-		} catch (e) {
-			next(e)
-		}
-	}
+
+	});
+	
+
+	// if (req.query.username != '' && req.query.password != '') {
+	// 	try {
+	// 		var html = mainPage({ title: 'Home' })
+	// 		res.send(html)
+	// 	} catch (e) {
+	// 		next(e)
+	// 	}
+	// } else {
+	// 	try {
+	// 		var html = templatealt({ title: 'Home' })
+	// 		res.send(html)
+	// 	} catch (e) {
+	// 		next(e)
+	// 	}
+	// }
 })
 
+// page for adding new students
 app.get('/add_student', function (req, res, next) {
 	try {
-		var html = template3({ title: 'Home' })
+		var html = addPage({ title: 'Home' })
 		res.send(html)
 	} catch (e) {
 		next(e)
 	}
 })
 
+// page for editing student
 app.get('/edit_student', function (req, res, next) {
 
 	try {
-		var html = template4({ title: 'Home' })
+		var html = editPage({ title: 'Home' })
 		res.send(html)
 	} catch (e) {
 		next(e)
@@ -86,10 +113,11 @@ app.get('/edit_student', function (req, res, next) {
 	 
 })
 
+// page for deleting student
 app.get('/delete_student', function (req, res, next) {
 	if (req.query.st_id != ''){
 		try {
-			var html = template5({ title: 'Home' })
+			var html = deletePage({ title: 'Home' })
 			res.send(html)
 		} catch (e) {
 			next(e)
@@ -99,34 +127,37 @@ app.get('/delete_student', function (req, res, next) {
 	}
 })
 
+// page for student report
 app.get('/student_report', function (req, res, next) {
 	try {
-		var html = template6({ title: 'Home' })
+		var html = studentReport({ title: 'Home' })
 		res.send(html)
 	} catch (e) {
 		next(e)
 	}
 })
 
+// page for data student
 app.get('/data_report', function (req, res, next) {
 	try {
-		var html = template7({ title: 'Home' })
+		var html = dataReport({ title: 'Home' })
 		res.send(html)
 	} catch (e) {
 		next(e)
 	}
 })
 
+// page for lookup student
 app.get('/lookup_student_report', function (req, res, next) {
 	try {
-		var html = template8({ title: 'Home' })
+		var html = lookupStudent({ title: 'Home' })
 		res.send(html)
 	} catch (e) {
 		next(e)
 	}
 })
 
-
+// page for submit add student
 app.get('/submit_add', function (req, res) {
   // Prepare output in JSON format
 
@@ -142,7 +173,7 @@ app.get('/submit_add', function (req, res) {
   		//add new student with correct data
   		console.log('student as been added\n')
   	try {
-  			var html = template3({ title: 'Home' })
+  			var html = mainPage({ title: 'Home' })
 	  		res.send(html)
   		} catch (e) {
 	  		next(e)
@@ -152,10 +183,11 @@ app.get('/submit_add', function (req, res) {
 	}
 })
 
+// page for loaded student
 app.get('/loaded_student_report', function (req, res, next) {
 	if (req.query.st_id != ''){
 		try {
-			var html = template9({ title: 'Home' })
+			var html = loadedStudent({ title: 'Home' })
 			res.send(html)
 		} catch (e) {
 			next(e)
@@ -165,18 +197,20 @@ app.get('/loaded_student_report', function (req, res, next) {
 	}
 })
 
+// page for generated student
 app.get('/generated_student_report', function (req, res, next) {
 	try {
-		var html = template10({ title: 'Home' })
+		var html = generatedStudent({ title: 'Home' })
 		res.send(html)
 	} catch (e) {
 		next(e)
 	}
 })
 
+// page for fulfill student
 app.get('/students_fulfill_report', function (req, res, next) {
 	try {
-		var html = template11({ title: 'Home' })
+		var html = studentsFulfill({ title: 'Home' })
 
 		res.send(html)
 	} catch (e) {
