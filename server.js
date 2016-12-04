@@ -1,7 +1,7 @@
 // This is the driver for the web app. It runs the server as well as conatins information
 // on the individual views the web app has.
 
-// Variables for building the enviroment
+// Compiles all of the Jade files into HTML.
 var express = require('express')
 , logger = require('morgan')
 , app = express()
@@ -17,6 +17,8 @@ var express = require('express')
 , generatedStudent = require('jade').compileFile(__dirname + '/source/templates/generated_student_page.jade')
 , studentsFulfill = require('jade').compileFile(__dirname + '/source/templates/students_fulfill_page.jade')
 , templatealt = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
+
+//A Data connection for searching the database
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
@@ -49,6 +51,28 @@ app.get('/', function (req, res, next) {
 
 // Page after teh login page
 app.get('/newpage', function (req, res, next) {
+	var username = req.query.username
+	var password = req.query.password
+
+	var query = connection.query('SELECT * FROM staff', function(err, rows) {
+  		if(rows[0].userName == username && rows[0].password == password) {
+  			try {
+				var html = mainPage({ title: 'Home' })
+				res.send(html)
+			} catch (e) {
+				next(e)
+			} 
+		} else {
+			try {
+				var html = templatealt({ title: 'Home' })
+				res.send(html)
+			} catch (e) {
+				next(e)
+			}
+		}
+
+	});
+
 	if (req.query.username != '' && req.query.password != '') {
 		try {
 			var html = mainPage({ title: 'Home' })

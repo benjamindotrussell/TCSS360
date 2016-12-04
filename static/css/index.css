@@ -55,7 +55,13 @@
 }
 .form label {
   font-family: "Roboto", sans-serif;
-  text-alight: left;
+  text-alight: right;
+  font: "red";
+  color: #fff;
+}
+.form checkbox {
+  vertical-align: left;
+  background-color: #00f;
 }
 .form .message {
   margin: 15px 0 0;
