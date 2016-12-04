@@ -16,7 +16,10 @@ var express = require('express')
 , loadedStudent = require('jade').compileFile(__dirname + '/source/templates/loaded_student_page.jade')
 , generatedStudent = require('jade').compileFile(__dirname + '/source/templates/generated_student_page.jade')
 , studentsFulfill = require('jade').compileFile(__dirname + '/source/templates/students_fulfill_page.jade')
-, templatealt = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
+, reLogin = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
+, reAddingStudent = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
+, loadedLookupStudent = require('jade').compileFile(__dirname + '/source/templates/loaded_lookup_student_page.jade')
+
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
@@ -49,6 +52,7 @@ app.get('/', function (req, res, next) {
 
 // Page after teh login page
 app.get('/newpage', function (req, res, next) {
+
 	if (req.query.username != '' && req.query.password != '') {
 		try {
 			var html = mainPage({ title: 'Home' })
@@ -57,14 +61,18 @@ app.get('/newpage', function (req, res, next) {
 			next(e)
 		}
 	} else {
+		
+
+		// window.alert('this is an alert')
 		try {
-			var html = templatealt({ title: 'Home' })
+			var html = reLogin({ title: 'Home' })
 			res.send(html)
 		} catch (e) {
 			next(e)
 		}
 	}
 })
+
 
 // page for adding new students
 app.get('/add_student', function (req, res, next) {
@@ -78,7 +86,6 @@ app.get('/add_student', function (req, res, next) {
 
 // page for editing student
 app.get('/edit_student', function (req, res, next) {
-
 	try {
 		var html = editPage({ title: 'Home' })
 		res.send(html)
@@ -87,6 +94,7 @@ app.get('/edit_student', function (req, res, next) {
 	}
 	 
 })
+
 
 // page for deleting student
 app.get('/delete_student', function (req, res, next) {
@@ -132,6 +140,16 @@ app.get('/lookup_student_report', function (req, res, next) {
 	}
 })
 
+// page for lookup student
+app.get('/loaded_lookup_student_report', function (req, res, next) {
+	try {
+		var html = loadedLookupStudent({ title: 'Home' })
+		res.send(html)
+	} catch (e) {
+		next(e)
+	}
+})
+
 // page for submit add student
 app.get('/submit_add', function (req, res) {
   // Prepare output in JSON format
@@ -142,7 +160,9 @@ app.get('/submit_add', function (req, res) {
   // })
   // console.log('insert\n')
   // console.log(query.sql + '\n')
+  	if (req.query.st_id != '' || req.query.f_name != ''|| req.query.l_name != '') {
 
+  	}
   	if (req.query.st_id != '' && req.query.f_name != '' && req.query.l_name != '') {
 
   		//add new student with correct data
@@ -154,6 +174,7 @@ app.get('/submit_add', function (req, res) {
 	  		next(e)
   		}
 	} else {
+
 		console.log('Please enter correct data\n')
 	}
 })
