@@ -1,7 +1,7 @@
 // This is the driver for the web app. It runs the server as well as conatins information
 // on the individual views the web app has.
 
-// Compiles all of the Jade files into HTML.
+// Compiles all of the Jade files used into HTML.
 var express = require('express')
 , logger = require('morgan')
 , app = express()
@@ -53,42 +53,30 @@ app.get('/', function (req, res, next) {
 app.get('/newpage', function (req, res, next) {
 	var username = req.query.username
 	var password = req.query.password
-
-	var query = connection.query('SELECT * FROM staff', function(err, rows) {
-  		if(rows[0].userName == username && rows[0].password == password) {
-  			try {
-				var html = mainPage({ title: 'Home' })
-				res.send(html)
-			} catch (e) {
-				next(e)
-			} 
-		} else {
+	console.log(username + " " + password)
+	//Checking to see if the user is in the database.
+	// var post = {staff.userName = username AND staff.`password` = password}
+	var query = connection.query("SELECT * FROM staff WHERE staff.userName = \"" + username 
+		+ "\" AND staff.`password` = \"" + password + "\""
+		, function(err, rows) {
+		console.log(query.sql)
+		if(rows[0] == undefined){
 			try {
 				var html = templatealt({ title: 'Home' })
 				res.send(html)
 			} catch (e) {
 				next(e)
 			}
+		} else if(rows[0].userName == username && rows[0].password == password) {
+  			try {
+				var html = mainPage({ title: 'Home' })
+				res.send(html)
+			} catch (e) {
+				next(e)
+			} 
 		}
+	})
 
-	});
-	
-
-	// if (req.query.username != '' && req.query.password != '') {
-	// 	try {
-	// 		var html = mainPage({ title: 'Home' })
-	// 		res.send(html)
-	// 	} catch (e) {
-	// 		next(e)
-	// 	}
-	// } else {
-	// 	try {
-	// 		var html = templatealt({ title: 'Home' })
-	// 		res.send(html)
-	// 	} catch (e) {
-	// 		next(e)
-	// 	}
-	// }
 })
 
 // page for adding new students
