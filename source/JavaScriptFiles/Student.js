@@ -38,7 +38,7 @@ module.exports = {
 					fName: fName,
 					studentID: studentID,
 					graduationTerm: graduationTerm, 
-					graduationYear: graduationYear,
+					// graduationYear: graduationYear,
 					externalEmail: externalEmail, 
 					uwEmail: uwEmail, 
 					gpa: gpa
@@ -61,12 +61,15 @@ module.exports = {
 					fName: fName,
 					studentID: studentID
 		};
-		connection.query('INSERT INTO students SET ?', post, function(err, result) {
+
+
+		var sql = connection.query('INSERT INTO students SET ?', post, function(err, result) {
 			if(err) { 
 				console.log(err);
 				return false;
 			};
 		});
+		console.log(sql.query)
 		return true;	
 	},
 	
@@ -240,4 +243,3 @@ module.exports = {
 		return double;
 	}
 }
-connection.end();

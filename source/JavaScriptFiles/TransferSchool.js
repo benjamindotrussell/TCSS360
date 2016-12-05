@@ -20,7 +20,7 @@ connection.connect(function(err) {
   if (err) { console.log(err);};
 });
 
-var TransferSchool = function(name, degree, gpa,) {
+var TransferSchool = function(name, degree, gpa) {
 	this.schoolName = name;
 	this.degreeProgram = degree;
 	this.gpa = gpa;
