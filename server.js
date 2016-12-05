@@ -24,6 +24,8 @@ var express = require('express')
 , reAddingStudent = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
 , loadedLookupStudent = require('jade').compileFile(__dirname + '/source/templates/loaded_lookup_student_page.jade')
 , student = require('./source/JavaScriptFiles/Student.js')
+, submitAddJob = require('jade').compileFile(__dirname + '/source/templates/add_job.jade')
+, job = require('./source/JavaScriptFiles/JobCollection.js')
 
 //A Data connection for searching the database
 
@@ -209,6 +211,33 @@ app.get('/lookup_student_report', function (req, res, next) {
 		var html = lookupStudent({ title: 'Home' })
 		res.send(html)
 	} catch (e) {
+		next(e)
+	}
+})
+
+app.get('/submit_add_job', function(req, res, next) {
+	try {
+		var html = submitAddJob({title: 'Home'})
+		res.send(html)
+	} catch(e) {
+		next(e)
+	}
+})
+
+app.get('/submit_add_job_action', function(req, res, next) {
+	if(req.query.employer != '', req.query.salary != '', req.query.start_date != '', req.query.end_date != '', req.query.fullTime != '', req.query.title != '', req.query.st_id != '')
+	var fulltime
+	if(req.query.fullTime == 'True' || req.query.fullTime == 'true' || req.query.fullTime == 'yes' || req.query.fullTime == 'Yes') {
+		fulltime = 1
+	} else {
+		fulltime = 0
+	}
+	
+	job.addJob(req.query.employer, req.query.salary, req.query.start_date, req.query.end_date, fulltime, req.query.title, req.query.st_id)
+	try {
+		var html = mainPage({title: 'Home'})
+		res.send(html)
+	} catch(e) {
 		next(e)
 	}
 })
