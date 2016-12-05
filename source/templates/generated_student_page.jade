@@ -3,6 +3,7 @@ extend default
 block content
 	.generated-student-page
 		.form
-			form.generated-student
+			form.generated-student(action='/newpage', method = 'GET')
 				p List of all the students
 				input(table='text', placeholder='the students')
+				button(onclick="move(); type='submit', return false;") Homepage

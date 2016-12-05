@@ -98,9 +98,21 @@ app.get('/edit_student', function (req, res, next) {
 
 // page for deleting student
 app.get('/delete_student', function (req, res, next) {
-	if (req.query.st_id != ''){
+	
 		try {
 			var html = deletePage({ title: 'Home' })
+			res.send(html)
+		} catch (e) {
+			next(e)
+		}
+	
+})
+
+// page for deleting student
+app.get('/submit_delete', function (req, res, next) {
+	if (req.query.st_id != ''){
+		try {
+			var html = mainPage({ title: 'Home' })
 			res.send(html)
 		} catch (e) {
 			next(e)
