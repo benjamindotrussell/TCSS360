@@ -65,7 +65,7 @@ app.get('/newpage', function (req, res, next) {
 		console.log(query.sql)
 		if(rows[0] == undefined){
 			try {
-				var html = templatealt({ title: 'Home' })
+				var html = reLogin({ title: 'Home' })
 				res.send(html)
 			} catch (e) {
 				next(e)
