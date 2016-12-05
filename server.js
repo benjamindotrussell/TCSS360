@@ -112,6 +112,17 @@ app.get('/newpage', function (req, res, next) {
 
 
 // page for adding new students
+app.get('/back_homepage', function (req, res, next) {
+	try {
+		var html = mainPage({ title: 'Home' })
+		res.send(html)
+	} catch (e) {
+		next(e)
+	}
+})
+
+
+// page for adding new students
 app.get('/add_student', function (req, res, next) {
 	try {
 		var html = addPage({ title: 'Home' })
