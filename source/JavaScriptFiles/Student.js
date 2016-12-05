@@ -21,17 +21,16 @@ connection.connect(function(err) {
   if (err) { console.log(err);};
 });
 
-<<<<<<< HEAD
+
 var gpaData;
 
-//export these functions.
-module.exports = {
+
 	
-=======
+
 
 //export these functions.
 module.exports = {	
->>>>>>> 0ff9e00748c8eb608135fb59732d07f0eb11c73c
+
 	/**
 	* Add a student to the DB.
 	* Params:  fName: student's first name, lName; student's last name, studentID: student's id
@@ -41,12 +40,8 @@ module.exports = {
 	* Params:  gpa: student's gpa
 	* return: boolean whether the query succeded.
 	**/
-<<<<<<< HEAD
-	addStudent: function(fName, lName, studentID, degree, degreeLevel, graduationTerm, 					graduationYear, externalEmail, uwEmail, gpa) {
-		
-=======
+
 	addStudent: function(fName, lName, studentID, degree, degreeLevel, graduationTerm, 					graduationYear, externalEmail, uwEmail, gpa) {		
->>>>>>> 0ff9e00748c8eb608135fb59732d07f0eb11c73c
 		var post = {lName: lName,
 					fName: fName,
 					studentID: studentID,
@@ -67,7 +62,7 @@ module.exports = {
 		
 	},
 
-<<<<<<< HEAD
+
 	/** 
 	* Add a degree to the students information.
 	* param1: degreeName: name of the degree, 
@@ -80,8 +75,6 @@ module.exports = {
 		return Degree.addDegree(degreeName, degreeLvl, student.studentID);	
 	},
 	
-=======
->>>>>>> 0ff9e00748c8eb608135fb59732d07f0eb11c73c
 	/**
 	* Update a student's information in the DB.
 	* Params:  fName: student's first name, lName; student's last name, studentID: student's id
