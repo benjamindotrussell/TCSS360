@@ -37,6 +37,7 @@ connection.connect(function(err) {
 });
 
 
+app.set('view engine', 'jade');
 
 app.use(logger('dev'))
 app.use(express.static(__dirname + '/static'))
@@ -50,6 +51,32 @@ app.get('/', function (req, res, next) {
 	} catch (e) {
 		next(e)
 	}
+})
+
+
+app.get('/list_students', function(req, res){
+  connection.query('SELECT * FROM students', function (err, results, fields) {
+    if (err) {
+      throw err;
+    }
+    
+    var these = []
+    these[0] = "Last Name 	First Name 	E-Mail"
+    for( var i = 0; i < results.length; ++i) {
+    	if(results[i].lName.length > 6) {
+    		these[i + 1] = results[i].lName + " 	" + results[i].fName + "		" + results[i].uwEmail
+    	} else {
+    		these[i + 1] = results[i].lName + " 		" + results[i].fName+ "		" + results[i].uwEmail
+    	}
+    }
+
+    console.log(these)
+    res.render('list_students', {
+      title: results,
+      results: these
+
+    });
+  })
 })
 
 
