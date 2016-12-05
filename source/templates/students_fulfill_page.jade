@@ -3,6 +3,7 @@ extend default
 block content
 	.students-fulfill-page
 		.form
-			form.students-fulfill
+			form.students-fulfill(action='/newpage', method = 'GET')
 				p List of all the students
 				input(table='text', placeholder='number of students')
+				button(onclick="move(); type='submit', return false;") Homepage
