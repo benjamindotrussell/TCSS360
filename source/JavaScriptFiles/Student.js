@@ -7,7 +7,6 @@
 //imports
 var degree 				= require('./Degree.js');
 var TransferSchool 		= require("./TransferSchool.js");
-//var studentCollection 	= require('./StudentCollection.js');
 var mysql				= require('mysql');
 //connect to the DB
 var connection 	= mysql.createConnection({
@@ -22,11 +21,17 @@ connection.connect(function(err) {
   if (err) { console.log(err);};
 });
 
+<<<<<<< HEAD
 var gpaData;
 
 //export these functions.
 module.exports = {
 	
+=======
+
+//export these functions.
+module.exports = {	
+>>>>>>> 0ff9e00748c8eb608135fb59732d07f0eb11c73c
 	/**
 	* Add a student to the DB.
 	* Params:  fName: student's first name, lName; student's last name, studentID: student's id
@@ -36,8 +41,12 @@ module.exports = {
 	* Params:  gpa: student's gpa
 	* return: boolean whether the query succeded.
 	**/
+<<<<<<< HEAD
 	addStudent: function(fName, lName, studentID, degree, degreeLevel, graduationTerm, 					graduationYear, externalEmail, uwEmail, gpa) {
 		
+=======
+	addStudent: function(fName, lName, studentID, degree, degreeLevel, graduationTerm, 					graduationYear, externalEmail, uwEmail, gpa) {		
+>>>>>>> 0ff9e00748c8eb608135fb59732d07f0eb11c73c
 		var post = {lName: lName,
 					fName: fName,
 					studentID: studentID,
@@ -47,15 +56,18 @@ module.exports = {
 					uwEmail: uwEmail, 
 					gpa: gpa
 		};
+		console.log(gpa);
 		connection.query('INSERT INTO students SET ?', post, function(err, result) {
 			if(err) { 
 				console.log(err);
 				return false;
 			};
 		});
-		return true;	
+		//degree.addDegree(degree, degreeLevel, studentID);
+		
 	},
 
+<<<<<<< HEAD
 	/** 
 	* Add a degree to the students information.
 	* param1: degreeName: name of the degree, 
@@ -68,6 +80,8 @@ module.exports = {
 		return Degree.addDegree(degreeName, degreeLvl, student.studentID);	
 	},
 	
+=======
+>>>>>>> 0ff9e00748c8eb608135fb59732d07f0eb11c73c
 	/**
 	* Update a student's information in the DB.
 	* Params:  fName: student's first name, lName; student's last name, studentID: student's id
@@ -77,14 +91,11 @@ module.exports = {
 	* Params:  gpa: student's gpa
 	* return: boolean whether the query succeded.
 	**/
-	updateStudent: function(fName, lName, studentID, degree, degreeLevel, graduationTerm, 					gradYear, externalEmail, uwEmail, gpa) {	
+	updateStudent: function(fName, lName, externalEmail, uwEmail) {	
 		var post = {lName: lName,
 					fName: fName,
-					graduationTerm: graduationTerm, 
-					graduationYear: graduationYear,
 					externalEmail: externalEmail, 
-					uwEmail: uwEmail, 
-					gpa: gpa
+					uwEmail: uwEmail,
 		};
 		
 		connection.query('UPDATE students SET ? WHERE studentID = studentID'
@@ -97,63 +108,26 @@ module.exports = {
 		return true;	
 	},
 
-	/**  Update a Students employment information **/
-	/**
-	* Update a Students employment information.
-	* Param: employerName: Name of the company the student works at.
-	* Param: employeeSalary: amount of mony the student earns per year.
-	* Param: startDate: date the student started the job.
-	* Param: startDate: date the student ended the job.
-	* Param: jobTitle: job title.
-	* return: data A students data.
-	**/
-	updateStudentJob: function(employerName, employeeSalary, startDate, jobTitle) {
-		
-		return JobCollection.addJob(employerName, employeeSalary, startDate, jobTitle);
-	},
 	
 	/**
 	* Retrieve student information from the DB by studentID.
 	* Param:  id the studentID of a student
 	* return: data A students data.
 	**/
-	retrieveStudent: function(id){
+	retrieveStudent: function(id, callback){
 		connection.query('SELECT * FROM students WHERE studentID = "' + id + '"', 
 			function(err, data) {
 				try{ 
 					if (err) {
-						console.log(err);
-						return null;
+						callback(err, null);
 					} else {
-						console.log(data);
-						return data;
+						callback(null, data);					
 					}
 				} catch (err){
 					console.log("query failed");
 				}
 		});
-	},
-
-	/**
-	* Retrieve student information from the DB by last name.
-	* Param:  lName the last name of a student
-	* return: data A students data.
-	**/
-	retrieveStudent: function(lName){
-		connection.query('SELECT * FROM students WHERE lName = "' + lName + '"', 
-			function(err, data) {
-				try{ 
-					if (err) {
-						console.log(err);
-						return null;
-					} else {
-						return data;
-					}
-				} catch (err){
-					console.log("query failed");
-				}
-		});	
-		return null;
+		
 	},
 
 	/**
