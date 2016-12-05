@@ -15,8 +15,8 @@ var express = require('express')
 , deletePage = require('jade').compileFile(__dirname + '/source/templates/delete_page.jade')
 , lookupStudent = require('jade').compileFile(__dirname + '/source/templates/lookup_student_page.jade')
 
-, studentReport = require('jade').compileFile(__dirname + '/source/templates/student_report_page.jade')
-, dataReport = require('jade').compileFile(__dirname + '/source/templates/data_report_page.jade')
+// , studentReport = require('jade').compileFile(__dirname + '/source/templates/student_report_page.jade')
+// , dataReport = require('jade').compileFile(__dirname + '/source/templates/data_report_page.jade')
 
 , generatedStudent = require('jade').compileFile(__dirname + '/source/templates/generated_student_page.jade')
 , studentsFulfill = require('jade').compileFile(__dirname + '/source/templates/students_fulfill_page.jade')
@@ -26,9 +26,13 @@ var express = require('express')
 , reAddingStudent = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
 , loadedLookupStudent = require('jade').compileFile(__dirname + '/source/templates/loaded_lookup_student_page.jade')
 , student = require('./source/JavaScriptFiles/Student.js')
-, submitAddJob = require('jade').compileFile(__dirname + '/source/templates/add_job.jade')
-, job = require('./source/JavaScriptFiles/JobCollection.js')
 
+, submitAddJob = require('jade').compileFile(__dirname + '/source/templates/add_job.jade')
+, submitAddDegree = require('jade').compileFile(__dirname + '/source/templates/add_degree.jade')
+, submitAddSkill = require('jade').compileFile(__dirname + '/source/templates/add_skill.jade')
+
+, job = require('./source/JavaScriptFiles/JobCollection.js')
+, degree = require('./source/JavaScriptFiles/Degree.js')
 //A Data connection for searching the database
 
 var mysql      = require('mysql');
@@ -229,6 +233,62 @@ app.get('/submit_add_job', function(req, res, next) {
 		next(e)
 	}
 })
+
+app.get('/submit_add_degree', function(req, res, next) {
+	try {
+		var html = submitAddDegree({title: 'Home'})
+		res.send(html)
+	} catch(e) {
+		next(e)
+	}
+})
+
+app.get('/submit_add_skill', function(req, res, next) {
+	try {
+		var html = submitAddSkill({title: 'Home'})
+		res.send(html)
+	} catch(e) {
+		next(e)
+	}
+})
+
+app.get('/submit_add_degree_action', function(req, res, next) {
+	if(req.query.degree_program != '', req.query.degree_level != '', req.query.st_id != '')
+		var post = {degreeProgram: req.query.degree_program,
+				degreeLevel: req.query.degree_level,
+				studentID: req.query.st_id};
+		connection.query('INSERT INTO degrees Set ?', post, function(err, result) {
+			if(err) { 
+				console.log(err);
+				return false;
+			};
+		});
+		try {
+			var html = mainPage({title: 'Home'})
+			res.send(html)
+		} catch(e) {
+			next(e)
+		}
+})
+
+app.get('/submit_add_skill_action', function(req, res, next) {
+	if(req.query.degree_skill != '', req.query.st_id != '')
+		var post = {skill: req.query.skill,
+				studentID: req.query.st_id};
+		connection.query('INSERT INTO skills Set ?', post, function(err, result) {
+			if(err) { 
+				console.log(err);
+				return false;
+			};
+		});
+		try {
+			var html = mainPage({title: 'Home'})
+			res.send(html)
+		} catch(e) {
+			next(e)
+		}
+})
+
 
 app.get('/submit_add_job_action', function(req, res, next) {
 	if(req.query.employer != '', req.query.salary != '', req.query.start_date != '', req.query.end_date != '', req.query.fullTime != '', req.query.title != '', req.query.st_id != '')

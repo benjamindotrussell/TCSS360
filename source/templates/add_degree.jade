@@ -1,0 +1,11 @@
+extend default
+			
+block content
+	.add-page
+		.form
+			form.add_job(action='/submit_add_degree_action', method = 'GET')
+				p Please enter the student ID and information on the job being added below.
+				input(type='text', name='degree_program', placeholder='Degree Program')
+				input(type='text', name='degree_level', placeholder='Degree Level')
+				input(type='text', name= 'st_id', placeholder='Student ID')
+				button(type='text') Submit New Degree
