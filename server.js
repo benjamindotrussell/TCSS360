@@ -11,12 +11,15 @@ var express = require('express')
 , addPage = require('jade').compileFile(__dirname + '/source/templates/add_page.jade')
 , editPage = require('jade').compileFile(__dirname + '/source/templates/edit_page.jade')
 , deletePage = require('jade').compileFile(__dirname + '/source/templates/delete_page.jade')
+, lookupStudent = require('jade').compileFile(__dirname + '/source/templates/lookup_student_page.jade')
+
 , studentReport = require('jade').compileFile(__dirname + '/source/templates/student_report_page.jade')
 , dataReport = require('jade').compileFile(__dirname + '/source/templates/data_report_page.jade')
-, lookupStudent = require('jade').compileFile(__dirname + '/source/templates/lookup_student_page.jade')
-, loadedStudent = require('jade').compileFile(__dirname + '/source/templates/loaded_student_page.jade')
+
 , generatedStudent = require('jade').compileFile(__dirname + '/source/templates/generated_student_page.jade')
 , studentsFulfill = require('jade').compileFile(__dirname + '/source/templates/students_fulfill_page.jade')
+
+, loadedStudent = require('jade').compileFile(__dirname + '/source/templates/loaded_student_page.jade')
 , reLogin = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
 , reAddingStudent = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
 , loadedLookupStudent = require('jade').compileFile(__dirname + '/source/templates/loaded_lookup_student_page.jade')
@@ -181,7 +184,7 @@ app.get('/submit_delete', function (req, res, next) {
 // page for student report
 app.get('/student_report', function (req, res, next) {
 	try {
-		var html = studentReport({ title: 'Home' })
+		var html = generatedStudent({ title: 'Home' })
 		res.send(html)
 	} catch (e) {
 		next(e)
@@ -191,7 +194,7 @@ app.get('/student_report', function (req, res, next) {
 // page for data student
 app.get('/data_report', function (req, res, next) {
 	try {
-		var html = dataReport({ title: 'Home' })
+		var html = studentsFulfill({ title: 'Home' })
 		res.send(html)
 	} catch (e) {
 		next(e)
@@ -260,26 +263,26 @@ app.get('/loaded_student_report', function (req, res, next) {
 	}
 })
 
-// page for generated student
-app.get('/generated_student_report', function (req, res, next) {
-	try {
-		var html = generatedStudent({ title: 'Home' })
-		res.send(html)
-	} catch (e) {
-		next(e)
-	}
-})
+// // page for generated student
+// app.get('/generated_student_report', function (req, res, next) {
+// 	try {
+// 		var html = generatedStudent({ title: 'Home' })
+// 		res.send(html)
+// 	} catch (e) {
+// 		next(e)
+// 	}
+// })
 
 // page for fulfill student
-app.get('/students_fulfill_report', function (req, res, next) {
-	try {
-		var html = studentsFulfill({ title: 'Home' })
+// app.get('/students_fulfill_report', function (req, res, next) {
+// 	try {
+// 		var html = studentsFulfill({ title: 'Home' })
 
-		res.send(html)
-	} catch (e) {
-		next(e)
-	}
-})
+// 		res.send(html)
+// 	} catch (e) {
+// 		next(e)
+// 	}
+// })
 
 app.listen(process.env.PORT || 3000, function () {
 	console.log('Listening on http://localhost:' + (process.env.PORT || 3000))
