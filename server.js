@@ -9,7 +9,9 @@ var express = require('express')
 , homepage = require('jade').compileFile(__dirname + '/source/templates/homepage.jade')
 , mainPage = require('jade').compileFile(__dirname + '/source/templates/main_page.jade')
 , addPage = require('jade').compileFile(__dirname + '/source/templates/add_page.jade')
+
 , editPage = require('jade').compileFile(__dirname + '/source/templates/edit_page.jade')
+
 , deletePage = require('jade').compileFile(__dirname + '/source/templates/delete_page.jade')
 , lookupStudent = require('jade').compileFile(__dirname + '/source/templates/lookup_student_page.jade')
 
@@ -139,6 +141,7 @@ app.get('/add_student', function (req, res, next) {
 
 // page for editing student
 app.get('/edit_student', function (req, res, next) {
+	
 	try {
 		var html = editPage({ title: 'Home' })
 		res.send(html)
@@ -195,6 +198,7 @@ app.get('/student_report', function (req, res, next) {
 
 // page for data student
 app.get('/data_report', function (req, res, next) {
+
 	try {
 		var html = studentsFulfill({ title: 'Home' })
 		res.send(html)
@@ -280,9 +284,13 @@ app.get('/submit_add', function (req, res) {
 
 // page for loaded student
 app.get('/loaded_student_report', function (req, res, next) {
-	if (req.query.st_id != ''){
+	// if (req.query.st_id != '' && req.query.f_name != '' && req.query.l_name != ''
+	// 	req.query.ext_mail != '' && req.query.uw_mail != '') {
+  	console.log(req.query.st_id + req.query.f_name + req.query.l_name)
+	if (req.query.st_id != '' && req.query.f_name != '' && req.query.l_name != '' 
+		&& req.query.ext_mail != '' && req.query.uw_mail != ''){
 		try {
-			var html = loadedStudent({ title: 'Home' })
+			var html = mainPage({ title: 'Home' })
 			res.send(html)
 		} catch (e) {
 			next(e)

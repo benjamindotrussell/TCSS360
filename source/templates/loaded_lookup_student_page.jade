@@ -5,19 +5,17 @@ block content
 		.form
 			form.data-report(action='/back_homepage', method = 'GET')
 				//- p Please enter the inforation to generate the students.
-				input(type='text', placeholder='Job Title')
-				input(type='text', placeholder='Degree Level')
-				input(type='text', placeholder='Term Graduated')
-				input(type='text', placeholder='Year Graduated')
-				input(type='text', placeholder='Location')
-				input(type='text', placeholder='Skills')
-
-				| full-time 
-				input(type='checkbox', name='Full Time') 
-
-				| internship
-				input(type='checkbox', name='Internship')
-				
-				input(type='text', placeholder='GPA')
-				input(type='text', placeholder='Salary')
+				input(type='text', name='f_name', placeholder='Student\'s First Name')
+				input(type='text', name='l_name', placeholder='Student\'s Last Name')
+				input(type='text', name= 'st_id', placeholder='Student ID')
+				input(type='text', name= 'degree', placeholder='Degree')
+				input(type='text', name= 'degree_level', placeholder='Degree Level')
+				input(type='text', name= 'grad_term', placeholder='Graduation Term')
+				input(type='text', name= 'grad_year', placeholder='Graduation Year')
+				input(type='text', name= 'ext_mail', placeholder='External E-Mail')
+				input(type='text', name= 'uw_mail', placeholder='UW E-Mail')
+				input(type='text', name= 'gpa', placeholder='GPA')
+				input(type='text', name='job_title',placeholder='Job Title')
+				input(type='text', name= 'skills', placeholder='Skills')
+				input(type='text', name= 'salary', placeholder='Salary')
 				button(onclick="move(); type='submit', return false;") Homepage
