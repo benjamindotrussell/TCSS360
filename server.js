@@ -139,7 +139,10 @@ app.get('/add_student', function (req, res, next) {
 	}
 })
 
+<<<<<<< HEAD
 // page for editing student
+=======
+>>>>>>> mohibkohi-master
 app.get('/edit_student', function (req, res, next) {
 	
 	try {
@@ -262,6 +265,7 @@ app.get('/loaded_lookup_student_report', function (req, res, next) {
 	}
 })
 
+<<<<<<< HEAD
 
 // page for submit add student
 app.get('/submit_add', function (req, res) {
@@ -320,6 +324,26 @@ app.get('/loaded_student_report', function (req, res, next) {
 // 		next(e)
 // 	}
 // })
+
+
+app.get('/data_report', function (req, res, next) {
+  try {
+    var html = template7({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
+app.get('/lookup_student_report', function (req, res, next) {
+  try {
+    var html = template8({ title: 'Home' })
+    res.send(html)
+  } catch (e) {
+    next(e)
+  }
+})
+
 
 app.listen(process.env.PORT || 3000, function () {
 	console.log('Listening on http://localhost:' + (process.env.PORT || 3000))
