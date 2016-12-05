@@ -20,24 +20,25 @@ connection.connect(function(err) {
   if (err) { console.log(err);};
 });
 
-var TransferSchool = function(name, degree, gpa) {
-	this.schoolName = name;
-	this.degreeProgram = degree;
-	this.gpa = gpa;
-
-};
-
-update = function(studentID, name, degree, gpa) {
-	var post = {studentID: studentID,
-				name: name,
-				degree: degree,
-				gpa: gpa};
-	connection.query('INSERT INTO transferSchools Set ?', post, function(err, result) {
-		if(err) { 
-			console.log(err);
-			return false;
-		};
-	});
-	return true;	
-};
-	
+module.exports = {
+	/**
+	* Add a new student to the DB.
+	* Params: name: student's name, degree: student's degree, studentID: student's id,
+	* Params: gpa: student's gpa.	
+	* return: boolean whether the query succeded.
+	**/
+	update: function(studentID, name, degree, gpa) {
+		var ret = false;
+		var post = {studentID: studentID,
+					name: name,
+					degree: degree,
+					gpa: gpa};
+		connection.query('INSERT INTO transferSchools Set ?', post, function(err, result) {
+			if(err) { 
+				console.log(err);
+				ret = false;
+			};
+		});
+		return ret;	
+	}
+}	

@@ -20,28 +20,25 @@ var connection 	= mysql.createConnection({
 connection.connect(function(err) {  
   if (err) { console.log(err);};
 });
-/**
-	A Degree Object
-	field1: myDegree		name of the degree
-	field2: myDegreeLevel	level of the degree
-**/
-function Degree(degree, degreeLevel) {
-	this.myDegree = degree;
-	this.myDegreeLevel = degreeLevel;
+
+module.exports = {
+	/**
+		Add a Degree to the DB.
+		field1: degreeName:	name of the degree
+		param: degreeLvl: level of the degree
+		param: studentID: student id
+	**/
+	addDegree: function(degreeName, degreeLvl, studentID) {	
+		var post = {degreeProgram: degreeName,
+					degreeLevel: degreeLvl,
+					studentID: studentID};
+		connection.query('INSERT INTO degrees Set ?', post, function(err, result) {
+			if(err) { 
+				console.log(err);
+				return false;
+			};
+		});
+		return true;	
+	}
 }
 
-addDegree = function(degreeName, degreeLvl, studentID) {	
-	var post = {degreeProgram: degreeName,
-				degreeLevel: degreeLvl,
-				studentID: studentID};
-	connection.query('INSERT INTO degrees Set ?', post, function(err, result) {
-		if(err) { 
-			console.log(err);
-			return false;
-		};
-	});
-	return true;	
-}
-
-module.exports = Degree;
-connection.end();
