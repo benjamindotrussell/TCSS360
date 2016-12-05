@@ -139,10 +139,9 @@ app.get('/add_student', function (req, res, next) {
 	}
 })
 
-<<<<<<< HEAD
+
 // page for editing student
-=======
->>>>>>> mohibkohi-master
+
 app.get('/edit_student', function (req, res, next) {
 	
 	try {
@@ -265,7 +264,7 @@ app.get('/loaded_lookup_student_report', function (req, res, next) {
 	}
 })
 
-<<<<<<< HEAD
+
 
 // page for submit add student
 app.get('/submit_add', function (req, res) {
