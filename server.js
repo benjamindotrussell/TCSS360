@@ -112,7 +112,19 @@ app.get('/newpage', function (req, res, next) {
 
 
 // page for adding new students
+app.get('/back_homepage', function (req, res, next) {
+	try {
+		var html = mainPage({ title: 'Home' })
+		res.send(html)
+	} catch (e) {
+		next(e)
+	}
+})
+
+
+// page for adding new students
 app.get('/add_student', function (req, res, next) {
+	
 	try {
 		var html = addPage({ title: 'Home' })
 		res.send(html)
@@ -123,20 +135,23 @@ app.get('/add_student', function (req, res, next) {
 
 // page for editing student
 app.get('/edit_student', function (req, res, next) {
-	try {
-		var html = editPage({ title: 'Home' })
-		res.send(html)
-	} catch (e) {
-		next(e)
+	if(req.query.st_id != '' && req.query.l_name != '' && req.query.f_name != '' && req.query.ext_mail != '' && req.query.uw_mail != '') {
+		student.updateStudent(req.query.st_id, req.query.f_name, req.query.l_name, req.query.ext_mail, req.query.uw_mail);
+		try {
+			var html = editPage({ title: 'Home' })
+			res.send(html)
+		} catch (e) {
+			next(e)
+		}
 	}
-	 
 })
 
 
 
 // page for deleting student
 app.get('/delete_student', function (req, res, next) {
-if (req.query.st_id != ''){
+	if (req.query.st_id != ''){
+	
 		try {
 			var html = deletePage({ title: 'Home' })
 			res.send(html)
@@ -150,11 +165,8 @@ if (req.query.st_id != ''){
 
 
 // page for deleting student
-app.get('/submit_delete', function (req, res, next) {
-	
-
-	if (req.query.st_id != ''){
-		
+app.get('/submit_delete', function (req, res, next) {	
+	if (req.query.st_id != ''){		
 		student.deleteStudent(req.query.st_id);
 		try {
 			var html = mainPage({ title: 'Home' })
@@ -203,7 +215,7 @@ app.get('/lookup_student_report', function (req, res, next) {
 app.get('/loaded_lookup_student_report', function (req, res, next) {
 	console.log('loaded lookup student.')
 	console.log('student id = ' + req.query.st_id)
-	if(req.query.st_id != '' && req.query.f_name != ''){
+	if(req.query.l_name != '' && req.query.f_name != ''){
 		try {
 			var html = loadedLookupStudent({ title: 'Home' })
 			res.send(html)
@@ -222,8 +234,10 @@ app.get('/submit_add', function (req, res) {
   	if (req.query.st_id != '' && req.query.f_name != '' && req.query.l_name != '') {
   		console.log(req.query.st_id + req.query.f_name + req.query.l_name)
   		//add new student with correct data
-		student.addStudent(req.query.f_name, req.query.l_name, req.query.st_id);  		
-  		console.log('student as been added\n')
+		student.addStudent(req.query.f_name, req.query.l_name, req.query.st_id
+			, req.query.degree, req.query.degree_level, req.query.grad_term, req.query.grad_year
+			, req.query.ext_mail, req.query.uw_mail, req.query.gpa);  		
+  		console.log(req.query.gpa)
   	try {
   			var html = mainPage({ title: 'Home' })
 	  		res.send(html)
@@ -251,6 +265,9 @@ app.get('/loaded_student_report', function (req, res, next) {
 
 // page for generated student
 app.get('/generated_student_report', function (req, res, next) {
+	student.jobReport(function(err, result) {
+		console.log(result.length);
+	});
 	try {
 		var html = generatedStudent({ title: 'Home' })
 		res.send(html)
@@ -261,6 +278,9 @@ app.get('/generated_student_report', function (req, res, next) {
 
 // page for fulfill student
 app.get('/students_fulfill_report', function (req, res, next) {
+	//student.gpaReport('2.5', '4.0', function(err, result) {
+	//	console.log(result.length);
+	//});
 	try {
 		var html = studentsFulfill({ title: 'Home' })
 
