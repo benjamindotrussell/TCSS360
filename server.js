@@ -53,7 +53,7 @@ app.get('/', function (req, res, next) {
 	}
 })
 
-
+//A page to list all the students in the datbase
 app.get('/list_students', function(req, res){
   connection.query('SELECT * FROM students', function (err, results, fields) {
     if (err) {
