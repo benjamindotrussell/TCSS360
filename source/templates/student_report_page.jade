@@ -11,8 +11,13 @@ block content
 				input(type='text', placeholder='Year Graduated')
 				input(type='text', placeholder='Location')
 				input(type='text', placeholder='Skills')
-				input(type='radio', name='Full Time')
-				input(type='radio', name='Internship')
+
+				| full-time 
+				input(type='checkbox', name='Full Time') 
+
+				| internship
+				input(type='checkbox', name='Internship')
+					
 				input(type='text', placeholder='GPA')
 				input(type='text', placeholder='Salary')
 				button(onclick="generated_student_move(); return false;") Generate Students
