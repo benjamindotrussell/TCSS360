@@ -3,7 +3,7 @@ extend default
 block content
 	.loaded-student-page
 		.form
-			form.loaded-student
+			form.loaded-student(action='/newpage', method = 'GET')
 				input(type='text', placeholder='Job Title')
 				input(type='text', placeholder='Degree Level')
 				input(type='text', placeholder='Term Graduated')
@@ -19,3 +19,4 @@ block content
 
 				input(type='text', placeholder='GPA')
 				input(type='text', placeholder='Salary')
+				button(onclick="move(); type='submit', return false;") Homepage
