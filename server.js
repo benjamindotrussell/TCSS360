@@ -220,7 +220,7 @@ app.get('/loaded_lookup_student_report', function (req, res, next) {
 app.get('/submit_add', function (req, res) {
   // Prepare output in JSON format  
   	if (req.query.st_id != '' && req.query.f_name != '' && req.query.l_name != '') {
-
+  		console.log(req.query.st_id + req.query.f_name + req.query.l_name)
   		//add new student with correct data
 		student.addStudent(req.query.f_name, req.query.l_name, req.query.st_id);  		
   		console.log('student as been added\n')
