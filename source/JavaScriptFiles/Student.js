@@ -179,7 +179,7 @@ module.exports = {
 	* return: booean whether the query succeded.
 	**/
 	deleteStudent: function(student) {
-		connection.query('DELETE FROM students WHERE studentID = ?', student.studentID,
+		connection.query('DELETE FROM students WHERE studentID = ?', student,
 				function(err, result) {
 			if(err) { 
 				console.log(err);
