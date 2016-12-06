@@ -37,15 +37,23 @@ module.exports = {
 					fullTime : fullTime,
 					jobTitle : jobTitle,
 					studentID : studentID
-		};			
-		connection.query('INSERT INTO job SET ?', post, function(err, result) {
+		};	
+		connection.query('UPDATE job SET endDate = "' + startDate + '" WHERE studentID = ' 
+			+ studentID + ' AND endDate = "0000-00-00"', function(err, result) {
+		console.log('UPDATE job SET endDate = ' + startDate + ' WHERE studentID = ' 
+			+ studentID + ' AND endDate = "0000-00-00"');
 		if(err) { 
 			console.log(err);
 			return false;
 		};
 	});
-	return true;
+		connection.query('INSERT INTO job SET ?', post, function(err, result) {
+			if(err) { 
+				console.log(err);
+				return false;
+			};
+		});
+		return true;
 	}
-
 }	
 	
