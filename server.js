@@ -196,15 +196,70 @@ app.get('/submit_delete', function (req, res, next) {
 
 // page for student report
 app.get('/student_report', function (req, res, next) {
-	try {
-		var html = generatedStudent({ title: 'Home' })
-		res.send(html)
-	} catch (e) {
-		next(e)
-	}
+	connection.query('SELECT * FROM students LEFT OUTER JOIN job ON students.studentID=job.studentID'
+			, function(err, results, fields) {
+    	if (err) {
+      	throw err;
+    	}
+    	console.log(results.length)
+    	var these = []
+    	var job = []
+    	var n = 0
+    	for(var i = 0; i < results.length; ++i) {
+    		if(job.indexOf(results[i].employer) == -1 && results[i].employer != null) {
+    			job[n] = results[i].employer
+    			n++
+    		}
+    	}
+    	console.log(job.length)
+
+    	var peopleWith = []
+    	var j = 0
+    	for(var i = 0; i < results.length; ++i) {
+    		if(results[i].employer != null && peopleWith.indexOf(results[i].studentID) == -1) {
+    			peopleWith[j] = results[i].studentID
+    			j++
+    		}
+    	}
+    	these[0] = peopleWith.length/results.length*100 + "% of students who have graduted have had a job.\n\n\nPEOPLE WHO HAVE JOBS:"
+
+    	var count = []
+    	for(var i = 0; i < job.length; ++i) {
+    		count[i] = 0
+    		for(var m = 0; m < results.length; ++m) {
+    			if(results[m].employer == job[i] && results[m].employer != null) {
+    				count[i] = count[i] + 1
+    			}
+    		}
+    	}
+
+    	console.log(typeof count[0])
+
+    	for(var i = 0; i < count.length; ++i) {
+    		these[i +1] = "\n" + count[i]/peopleWith.length*100 + "% of people with a job work at " + job[i] + ".\n"
+    			
+    	}
+
+    	these[count.length + 1] = "\n\nPEOPLE WHO GRADUATED:"
+
+    	for(var i = 0; i < count.length; ++i) {
+    		these[i + job.length + 2] = count[i]/results.length*100 + "% of people who have graduated work at " + job[i] +"."
+    			
+    	}
+
+    	
+
+    	
+
+    res.render('list_students', {
+      title: results,
+      results: these
+
+    });
+  })
 })
 
-// page for data student
+// Generates a report based on GPA's in the database
 app.get('/gpa_report', function (req, res, next) {
 	connection.query('SELECT * FROM students', function (err, results, fields) {
     	if (err) {
