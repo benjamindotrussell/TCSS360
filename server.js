@@ -249,7 +249,10 @@ app.get('/gpa_report', function (req, res, next) {
     	these[2] = "Student(s) between a 3.0 and 3.5: 	" + count
     	
    
-    	these[4] = "All values shown are inclusive"
+    	these[4] = "\n\nAll values shown are inclusive\n\n"
+
+    	these[5] = "Additioanlly the Institute requires a minimum GPA \nof 2.5 to graduate.\n\n"
+    	these[6] = "Any student witha GPA below that is not included"
     	
 
     res.render('list_students', {
