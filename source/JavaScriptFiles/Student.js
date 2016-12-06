@@ -84,22 +84,23 @@ module.exports = {
 	* Params:  gpa: student's gpa
 	* return: boolean whether the query succeded.
 	**/
-	updateStudent: function(fName, lName, externalEmail, uwEmail) {	
-		var post = {lName: lName,
-					fName: fName,
-					externalEmail: externalEmail, 
-					uwEmail: uwEmail,
-		};
-		
-		connection.query('UPDATE students SET ? WHERE studentID = studentID'
-			, post, function(err, result) {
-			if(err) { 
-				console.log(err);
-				return false;
-			};
-		});
-		return true;	
-	},
+	updateStudent: function(id, fName, lName, externalEmail, uwEmail) {    
+        var post = {lName: lName,
+                    fName: fName,
+                    externalEmail: externalEmail, 
+                    uwEmail: uwEmail,
+        };
+        
+        var sql = connection.query('UPDATE students SET lName = \"' + lName + '\", fName = \"' + fName + '\", externalEmail = \"' + externalEmail + '\", uwEmail = \"' + uwEmail + '\" WHERE studentID = ' + id
+            , function(err, result) {
+            	console.log(sql.query)
+            if(err) { 
+                console.log(err);
+                return false;
+            };
+        });
+        return true;    
+    },
 
 	
 	/**

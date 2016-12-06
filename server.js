@@ -134,7 +134,7 @@ app.get('/back_homepage', function (req, res, next) {
 app.get('/add_student', function (req, res, next) {
 
 	try {
-		var html = mainPage({ title: 'Home' })
+		var html = addPage({ title: 'Home' })
 		res.send(html)
 	} catch (e) {
 		next(e)
@@ -147,15 +147,13 @@ app.get('/add_student', function (req, res, next) {
 
 // page for editing student
 app.get('/edit_student', function (req, res, next) {
-	if(req.query.st_id != '' && req.query.l_name != '' && req.query.f_name != '' && req.query.ext_mail != '' && req.query.uw_mail != '') {
-		student.updateStudent(req.query.st_id, req.query.f_name, req.query.l_name, req.query.ext_mail, req.query.uw_mail);
-		try {
-			var html = editPage({ title: 'Home' })
-			res.send(html)
-		} catch (e) {
-			next(e)
-		}
+	try {
+		var html = editPage({ title: 'Home' })
+		res.send(html)
+	} catch (e) {
+		next(e)
 	}
+	
 })
 
 
@@ -292,19 +290,15 @@ app.get('/submit_add', function (req, res) {
 
 // page for loaded student
 app.get('/loaded_student_report', function (req, res, next) {
-	// if (req.query.st_id != '' && req.query.f_name != '' && req.query.l_name != ''
-	// 	req.query.ext_mail != '' && req.query.uw_mail != '') {
-  	console.log(req.query.st_id + req.query.f_name + req.query.l_name)
-	if (req.query.st_id != '' && req.query.f_name != '' && req.query.l_name != '' 
-		&& req.query.ext_mail != '' && req.query.uw_mail != ''){
+	if(req.query.st_id != '' && req.query.l_name != '' && req.query.f_name != '' && req.query.ext_mail != '' && req.query.uw_mail != '') {
+		student.updateStudent(req.query.st_id, req.query.f_name, req.query.l_name, req.query.ext_mail, req.query.uw_mail);
+		console.log(req.query.st_id+ req.query.f_name+ req.query.l_name + req.query.ext_mail + req.query.uw_mail)
 		try {
-			var html = mainPage({ title: 'Home' })
+			var html = editPage({ title: 'Home' })
 			res.send(html)
 		} catch (e) {
 			next(e)
 		}
-	}else {
-		console.log('Please enter student id')
 	}
 })
 
