@@ -175,17 +175,14 @@ module.exports = {
 	**/
 	jobReport: function(callback) {
 		
-		connection.query(' SELECT * FROM students LEFT OUTER JOIN job ON students.studentID=job.studentID'
+		connection.query('SELECT * FROM students LEFT OUTER JOIN job ON students.studentID=job.studentID'
 			, function(err, data) {
-			try{ 
-				if (err) {
-					 callback(err, null);
-				} else {
+			if (err) {
+					callback(err, null);
+			} else {
 					callback(null, data);					
-				}
-			} catch (err){
-				console.log("query failed");
 			}
+			
 		});
 	},
 	/**
@@ -195,7 +192,7 @@ module.exports = {
 	**/
 	gpaReport: function(lowerBound, upperBound, callback) {		
 		
-		connection.query('SELECT * FROM students WHERE gpa BETWEEN ' + lowerBound + ' AND ' + upperBound , function(err, data) {			
+		connection.query('SELECT * FROM students', function(err, data) {			
 			try{ 
 				if (err) {
 					 callback(err, null);

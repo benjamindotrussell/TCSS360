@@ -1,4 +1,5 @@
 
+
 // This is the driver for the web app. It runs the server as well as conatins information
 // on the individual views the web app has.
 
@@ -204,14 +205,59 @@ app.get('/student_report', function (req, res, next) {
 })
 
 // page for data student
-app.get('/data_report', function (req, res, next) {
+app.get('/gpa_report', function (req, res, next) {
+	connection.query('SELECT * FROM students', function (err, results, fields) {
+    	if (err) {
+      	throw err;
+    	}
 
-	try {
-		var html = studentsFulfill({ title: 'Home' })
-		res.send(html)
-	} catch (e) {
-		next(e)
-	}
+    	var average = 0.0
+    	for(var i = 0; i < results.length; ++i) {
+    		average = average + Number(results[i].gpa)
+    		
+    	}
+
+
+
+    	average = average / results.length
+    	console.log(average)
+    	var these = []
+    	these[0] = "The Average Student GPA is: 		" + average
+    	var count = 0
+    	for(var i = 0; i < results.length; ++i) {
+    		if(Number(results[i].gpa) > 3.5) {
+    			count ++
+    		}
+    	}
+    	console.log(count)
+    	these[1] = "Student(s) above a 3.5: 		" + count
+    	count = 0
+    	for(var i = 0; i < results.length; ++i) {
+    		if(Number(results[i].gpa) > 2.4 && Number(results[i].gpa) < 3.0) {
+    			count ++
+    		}
+    	}
+    	console.log(count)
+    	these[3] = "Student(s) between a 2.5 and 3.4: 	" + count
+    	count = 0
+    	for(var i = 0; i < results.length; ++i) {
+    		if(Number(results[i].gpa) < 3.6 && Number(results[i].gpa) > 2.9) {
+    			count ++
+    		}
+    	}
+    	console.log(count)
+    	these[2] = "Student(s) between a 3.0 and 3.5: 	" + count
+    	
+   
+    	these[4] = "All values shown are inclusive"
+    	
+
+    res.render('list_students', {
+      title: results,
+      results: these
+
+    });
+  })
 })
 
 // page for lookup student
