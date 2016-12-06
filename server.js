@@ -68,12 +68,12 @@ app.get('/list_students', function(req, res){
     }
     
     var these = []
-    these[0] = "Last Name 	First Name 	E-Mail"
+    these[0] = "Last Name 	First Name 	SID"
     for( var i = 0; i < results.length; ++i) {
     	if(results[i].lName.length > 6) {
-    		these[i + 1] = results[i].lName + " 	" + results[i].fName + "		" + results[i].uwEmail
-    	} else {
-    		these[i + 1] = results[i].lName + " 		" + results[i].fName+ "		" + results[i].uwEmail
+    		these[i + 1] = results[i].lName + " 	" + results[i].fName + "		"  + results[i].studentID
+    	} else {	
+    		these[i + 1] = results[i].lName + " 		" + results[i].fName+ "		" + results[i].studentID
     	}
     }
 
