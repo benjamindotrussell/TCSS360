@@ -477,19 +477,19 @@ app.get('/loaded_lookup_student_report', function (req, res, next) {
     			connection.query("SELECT * FROM skills WHERE skills.studentID = \"" + req.query.st_id + "\"", 
 				function(err, results,rows) {
 					if(results[0] == undefined || results[0] == 'null') {
-						these[9] = "Skill			" + "No Record";
+						these[10] = "Skill			" + "No Record";
 					} else {
-						these[9] = "Skill			" + results[0].skill 
+						these[10] = "Skill			" + results[0].skill 
 					}
 						
 					connection.query("SELECT * FROM job WHERE job.studentID = \"" + req.query.st_id + "\"", 
 					function(err, results,rows) {
 						if(results[0] == undefined || results[0] == 'null') {
-							these[10] = "Job Title		" + "No Record";
-							these[11] = "Sallary			" + "No Record";
+							these[11] = "Job Title		" + "No Record";
+							these[12] = "Sallary			" + "No Record";
 						} else {
-							these[10] = "Job Title		" + results[0].jobTItle
-							these[11] = "Sallary			" + results[0].salary
+							these[11] = "Job Title		" + results[0].jobTItle
+							these[12] = "Sallary			" + results[0].salary
 						}
 						console.log(these)
 	    				res.render('list_students', {
@@ -504,32 +504,6 @@ app.get('/loaded_lookup_student_report', function (req, res, next) {
 	})
 	
 })
-//A page to list all the students in the datbase
-app.get('/list_students', function(req, res){
-  connection.query('SELECT * FROM students', function (err, results, fields) {
-    if (err) {
-      throw err;
-    }
-    
-    var these = []
-    these[0] = "Last Name 	First Name 	SID"
-    for( var i = 0; i < results.length; ++i) {
-    	if(results[i].lName.length > 6) {
-    		these[i + 1] = results[i].lName + " 	" + results[i].fName + "		"  + results[i].studentID
-    	} else {	
-    		these[i + 1] = results[i].lName + " 		" + results[i].fName+ "		" + results[i].studentID
-    	}
-    }
-
-    console.log(these)
-    res.render('list_students', {
-      title: results,
-      results: these
-
-    });
-  })
-})
-
 
 
 // page for submit add student
@@ -568,30 +542,6 @@ app.get('/loaded_student_report', function (req, res, next) {
 		}
 	}
 })
-
-
-
-
-
-
-// app.get('/data_report', function (req, res, next) {
-//   try {
-//     var html = template7({ title: 'Home' })
-//     res.send(html)
-//   } catch (e) {
-//     next(e)
-//   }
-// })
-
-// app.get('/lookup_student_report', function (req, res, next) {
-//   try {
-//     var html = template8({ title: 'Home' })
-//     res.send(html)
-//   } catch (e) {
-//     next(e)
-//   }
-// })
-
 
 app.listen(process.env.PORT || 3000, function () {
 	console.log('Listening on http://localhost:' + (process.env.PORT || 3000))
