@@ -217,7 +217,7 @@ app.get('/student_report', function (req, res, next) {
     			j++
     		}
     	}
-    	these[0] = peopleWith.length/results.length*100 + "% of students who have graduted have had a job.\n\n\nPEOPLE WHO HAVE JOBS:"
+    	these[0] = Math.round(peopleWith.length/results.length*100) + "% of students who have graduted have had a job.\n\n\nPEOPLE WHO CURRENTLY HAVE JOBS:"
 
     	var count = []
     	for(var i = 0; i < job.length; ++i) {
@@ -232,16 +232,18 @@ app.get('/student_report', function (req, res, next) {
     	console.log(typeof count[0])
 
     	for(var i = 0; i < count.length; ++i) {
-    		these[i +1] = "\n" + count[i]/peopleWith.length*100 + "% of people with a job work at " + job[i] + ".\n"
+    		these[i +1] = "\n" + Math.round(count[i]/peopleWith.length*100) + "% have worked at " + job[i] + ".\n"
     			
     	}
 
-    	these[count.length + 1] = "\n\nPEOPLE WHO GRADUATED:"
+    	these[count.length + 1] = "\n\nPEOPLE WHO HAVE GRADUATED:"
 
     	for(var i = 0; i < count.length; ++i) {
-    		these[i + job.length + 2] = count[i]/results.length*100 + "% of people who have graduated work at " + job[i] +"."
+    		these[i + job.length + 2] = Math.round(count[i]/results.length*100 )+ "% have worked at " + job[i] +"."
     			
     	}
+    	these[job.length + count.length + 3] = "	"
+    	these[job.length + count.length + 4] = "These numbers are al rounded to the nearest\nwhole number."
 
     	res.render('list_students', {
       	title: results,
@@ -266,7 +268,7 @@ app.get('/gpa_report', function (req, res, next) {
     	average = average / results.length
     	console.log(average)
     	var these = []
-    	these[0] = "The Average Student GPA is: 		" + average
+    	these[0] = "The Average Student GPA is: 		" + average.toFixed(2)
     	var count = 0
     	for(var i = 0; i < results.length; ++i) {
     		if(Number(results[i].gpa) > 3.5) {
