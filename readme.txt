@@ -5,21 +5,7 @@ CHANGES FROM PHASE II SUBMISSION:
 Please see the submitted Phase III document's apendix.
 
 IMPLEMENTATION:
-
-For Project Phase 3, the use cases that were implemented are:
-Add Student: By Ryan
-Update student:	By Ben
-Delete student:	By Ben
-Job Report:	By Ryan
-GPA Report:	By Ryan
-List Students:	By Ryan
-Lookup Student:	By Mohib
-Add Job:		By Ryan
-Add Degree:	By Mohib
-Add Skill:	By MOhib
-At the moment all the above use cases are implemented, and are functioning well.
-
-
++++++++++++++++++++++++++++++++++++++++++
 INSTALLATION INSTRUCTIONS:
 
 If you do not wish to run this app locally feel free to visit:
@@ -48,6 +34,35 @@ Direct your command line to the containing folder and type:
 Type localhost:3000 insto your browser.
 Use the above log in information to access the site both locally and on the webpage.
 All instances of this webapp access the same database.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+TESTING:
+Navigate in the command line to the containing folder.
+  Type    "npm install mocha"     to install the testing framework
+  Type    "mocha testFile.js"     to run the test suite
+  
+  
+README:
+For Project Phase 3, the use cases that were implemented are:
+Add Student: By Ryan
+Update student:	By Ben
+Delete student:	By Ben
+Job Report:	By Ryan
+GPA Report:	By Ryan
+List Students:	By Ryan
+Lookup Student:	By Mohib
+Add Job:		By Ryan
+Add Degree:	By Mohib
+Add Skill:	By MOhib
+At the moment all the above use cases are implemented, and are functioning well.
+
+
+ISSUES:
+
+
+
 
 
 
