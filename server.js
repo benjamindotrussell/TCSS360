@@ -15,7 +15,7 @@ var express = require('express')
 
 , deletePage = require('jade').compileFile(__dirname + '/source/templates/delete_page.jade')
 , lookupStudent = require('jade').compileFile(__dirname + '/source/templates/lookup_student_page.jade')
-
+, reloadlookupStudent = require('jade').compileFile(__dirname + '/source/templates/reload_lookup_student_page.jade')
 // , studentReport = require('jade').compileFile(__dirname + '/source/templates/student_report_page.jade')
 // , dataReport = require('jade').compileFile(__dirname + '/source/templates/data_report_page.jade')
 
@@ -25,6 +25,7 @@ var express = require('express')
 , loadedStudent = require('jade').compileFile(__dirname + '/source/templates/loaded_student_page.jade')
 , reLogin = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
 , reAddingStudent = require('jade').compileFile(__dirname + '/source/templates/hompagealt.jade')
+
 , loadedLookupStudent = require('jade').compileFile(__dirname + '/source/templates/loaded_lookup_student_page.jade')
 , student = require('./source/JavaScriptFiles/Student.js')
 
@@ -82,10 +83,10 @@ app.get('/list_students', function(req, res){
     	}
     }
 
-    console.log(these)
-    res.render('list_students', {
-      title: results,
-      results: these
+    	console.log(these)
+    	res.render('list_students', {
+    	title: results,
+      	results: these
 
     });
   })
@@ -146,10 +147,6 @@ app.get('/add_student', function (req, res, next) {
 	}
 })
 
-
-
-
-
 // page for editing student
 app.get('/edit_student', function (req, res, next) {
 	try {
@@ -160,7 +157,6 @@ app.get('/edit_student', function (req, res, next) {
 	}
 	
 })
-
 
 
 // page for deleting student
@@ -247,13 +243,9 @@ app.get('/student_report', function (req, res, next) {
     			
     	}
 
-    	
-
-    	
-
-    res.render('list_students', {
-      title: results,
-      results: these
+    	res.render('list_students', {
+      	title: results,
+      	results: these
 
     });
   })
@@ -271,9 +263,6 @@ app.get('/gpa_report', function (req, res, next) {
     		average = average + Number(results[i].gpa)
     		
     	}
-
-
-
     	average = average / results.length
     	console.log(average)
     	var these = []
@@ -330,6 +319,7 @@ app.get('/lookup_student_report', function (req, res, next) {
 	}
 })
 
+//page for adding jobs for students. 
 app.get('/submit_add_job', function(req, res, next) {
 	try {
 		var html = submitAddJob({title: 'Home'})
@@ -339,6 +329,7 @@ app.get('/submit_add_job', function(req, res, next) {
 	}
 })
 
+//page for adding degree for students.
 app.get('/submit_add_degree', function(req, res, next) {
 	try {
 		var html = submitAddDegree({title: 'Home'})
@@ -348,6 +339,7 @@ app.get('/submit_add_degree', function(req, res, next) {
 	}
 })
 
+//page for adding skill for studetns. 
 app.get('/submit_add_skill', function(req, res, next) {
 	try {
 		var html = submitAddSkill({title: 'Home'})
@@ -357,6 +349,7 @@ app.get('/submit_add_skill', function(req, res, next) {
 	}
 })
 
+//pagge for adding degree for students. 
 app.get('/submit_add_degree_action', function(req, res, next) {
 	if(req.query.degree_program != '', req.query.degree_level != '', req.query.st_id != '')
 		var post = {degreeProgram: req.query.degree_program,
@@ -376,6 +369,7 @@ app.get('/submit_add_degree_action', function(req, res, next) {
 		}
 })
 
+//page for adding skills for students.
 app.get('/submit_add_skill_action', function(req, res, next) {
 	if(req.query.degree_skill != '', req.query.st_id != '')
 		var post = {skill: req.query.skill,
@@ -394,7 +388,7 @@ app.get('/submit_add_skill_action', function(req, res, next) {
 		}
 })
 
-
+//page for adding jobs for students. 
 app.get('/submit_add_job_action', function(req, res, next) {
 	if(req.query.employer != '', req.query.salary != '', req.query.start_date != '', req.query.end_date != '', req.query.fullTime != '', req.query.title != '', req.query.st_id != '')
 	var fulltime
@@ -413,20 +407,125 @@ app.get('/submit_add_job_action', function(req, res, next) {
 	}
 })
 
-// page for lookup student
+// page for lookup student with desired info.s
 app.get('/loaded_lookup_student_report', function (req, res, next) {
 	console.log('loaded lookup student.')
-	console.log('student id = ' + req.query.st_id)
-	if(req.query.l_name != '' && req.query.f_name != ''){
-		try {
-			var html = loadedLookupStudent({ title: 'Home' })
-			res.send(html)
-		} catch (e) {
-			next(e)
+	// console.log('student id = ' + req.query.st_id)
+	var these = []
+	connection.query("SELECT * FROM students WHERE students.studentID = \"" + req.query.st_id + "\"", 
+		function(err, results,rows) {
+
+		// console.log(query.sql)
+		console.log('result[0] = ' + results[0])
+
+		if(results[0] == undefined) {
+			console.log('Please enter correct data\n')
+			try {
+				var html = reloadlookupStudent({ title: 'Home' })
+				res.send(html)
+			} catch (e) {
+				next(e)
+			}
+		} else {
+			
+    		these[0] = "Last Name 		" + results[0].lName 
+    		these[1] = "First Name 		" + results[0].fName 
+    		these[2] = "Student Id 		" + results[0].studentID 
+
+    		if (results[0].graduationTerm == 'null') {
+    			these[3] = "Graduation Term 	" + 'No Record';
+    		} else { 
+    			these[3] = "Graduation Term 	" + results[0].graduationTerm
+    		}
+
+    		if (results[0].graduationYear == 'null') {
+    			these[4] = "Graduation Year 	" + 'No Record';
+    		} else { 
+    			these[4] = "Graduation Year 	" + results[0].graduationYear
+    		}
+
+    		if (results[0].externalEmail == 'null') {
+    			these[5] = "Externam Email 	" + 'No Record';
+    		} else { 
+    			these[5] = "Externam Email 		" + results[0].externalEmail
+    		}
+    		
+    		if (results[0].uwEmail == 'null') {
+    			these[6] = "UW Email 	" + 'No Record';
+    		} else { 
+    			these[6] = "UW Email 		" + results[0].uwEmail
+    		}
+
+    		if (results[0].uwEmail == 'null') {
+    			these[7] = "GPA 	" + 'No Record';
+    		} else { 
+    			these[7] = "GPA  			" + results[0].gpa
+    		}
+    		
+    		connection.query("SELECT * FROM degrees WHERE degrees.studentID = \"" + req.query.st_id + "\"", 
+				function(err, results,rows) {
+					// console.log('come looking for degrees' + results[0].degreeProgram)
+					if(results[0] == undefined || results[0] == 'null') {
+						these[8] = "Degree Program 		" + "No Record";
+	    				these[9] = "Degree Level		" + "No Record";
+					} else {
+						these[8] = "Degree Program 		" + results[0].degreeProgram
+	    				these[9] = "Degree Level		" + results[0].degreeLevel 
+	    			}
+    			connection.query("SELECT * FROM skills WHERE skills.studentID = \"" + req.query.st_id + "\"", 
+				function(err, results,rows) {
+					if(results[0] == undefined || results[0] == 'null') {
+						these[9] = "Skill			" + "No Record";
+					} else {
+						these[9] = "Skill			" + results[0].skill 
+					}
+						
+					connection.query("SELECT * FROM job WHERE job.studentID = \"" + req.query.st_id + "\"", 
+					function(err, results,rows) {
+						if(results[0] == undefined || results[0] == 'null') {
+							these[10] = "Job Title		" + "No Record";
+							these[11] = "Sallary			" + "No Record";
+						} else {
+							these[10] = "Job Title		" + results[0].jobTItle
+							these[11] = "Sallary			" + results[0].salary
+						}
+						console.log(these)
+	    				res.render('list_students', {
+	      				title: results,
+	      				results: these
+	    				});	
+	    			})
+				})	
+
+				})
 		}
-	} else {
-		console.log('Please enter correct data\n')
-	}
+	})
+	
+})
+//A page to list all the students in the datbase
+app.get('/list_students', function(req, res){
+  connection.query('SELECT * FROM students', function (err, results, fields) {
+    if (err) {
+      throw err;
+    }
+    
+    var these = []
+    these[0] = "Last Name 	First Name 	SID"
+    for( var i = 0; i < results.length; ++i) {
+    	if(results[i].lName.length > 6) {
+    		these[i + 1] = results[i].lName + " 	" + results[i].fName + "		"  + results[i].studentID
+    	} else {	
+    		these[i + 1] = results[i].lName + " 		" + results[i].fName+ "		" + results[i].studentID
+    	}
+    }
+
+    console.log(these)
+    res.render('list_students', {
+      title: results,
+      results: these
+
+    });
+  })
 })
 
 
@@ -452,6 +551,8 @@ app.get('/submit_add', function (req, res) {
 	}
 })
 
+
+
 // page for loaded student
 app.get('/loaded_student_report', function (req, res, next) {
 	if(req.query.st_id != '' && req.query.l_name != '' && req.query.f_name != '' && req.query.ext_mail != '' && req.query.uw_mail != '') {
@@ -469,23 +570,25 @@ app.get('/loaded_student_report', function (req, res, next) {
 
 
 
-app.get('/data_report', function (req, res, next) {
-  try {
-    var html = template7({ title: 'Home' })
-    res.send(html)
-  } catch (e) {
-    next(e)
-  }
-})
 
-app.get('/lookup_student_report', function (req, res, next) {
-  try {
-    var html = template8({ title: 'Home' })
-    res.send(html)
-  } catch (e) {
-    next(e)
-  }
-})
+
+// app.get('/data_report', function (req, res, next) {
+//   try {
+//     var html = template7({ title: 'Home' })
+//     res.send(html)
+//   } catch (e) {
+//     next(e)
+//   }
+// })
+
+// app.get('/lookup_student_report', function (req, res, next) {
+//   try {
+//     var html = template8({ title: 'Home' })
+//     res.send(html)
+//   } catch (e) {
+//     next(e)
+//   }
+// })
 
 
 app.listen(process.env.PORT || 3000, function () {
